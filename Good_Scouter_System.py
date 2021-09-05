@@ -87,7 +87,7 @@ def create_FT_model(hidden, w_AE1, w_AE2, w_AE3):
     return FT_model
 
 
-keys = pd.read_csv('./Twitter_API_Key.csv', encoding='CP932')
+keys = pd.read_csv('./Twitter_API_Key_dummy.csv', encoding='CP932')
 # print(keys['key'])
 
 key_data = keys['key']
