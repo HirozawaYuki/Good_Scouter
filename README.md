@@ -4,7 +4,8 @@
 $ pip install mecab-python3 <br>
 $ pip install unidic-lite <br>
 $ pip install tweepy==3.10.0 <br>
-$ pip install scikit-learn <br><br>
+$ pip install scikit-learn <br>
+他<br><br>
 
 ## * プログラムについて
   * make_tweet_Dataset.py　(実行は一度で良い) <br>
