@@ -6,8 +6,7 @@ from tensorflow.keras.optimizers import Adam
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
-def create_AE_model(hidden):
-    
+def create_AE_model(hidden):  # オートエンコーダを構築する関数
     inputL = Input(shape=(inputs))
     
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
@@ -23,7 +22,7 @@ def create_AE_model(hidden):
     return COPD_DAE
 
 
-def create_FT_model(hidden, w_AE1, w_AE2, w_AE3):
+def create_FT_model(hidden, w_AE1, w_AE2, w_AE3):  # ファインチューニングモデルを構築する関数
   
     inputL = Input(shape=(inputs))
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
