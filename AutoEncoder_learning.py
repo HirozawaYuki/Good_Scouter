@@ -6,7 +6,7 @@ from tensorflow.keras.optimizers import Adam
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
-def create_AE_model(hidden):  # オートエンコーダを構築する関数
+def create_AE_model(hidden, inputs):  # オートエンコーダを構築する関数
     inputL = Input(shape=(inputs))
     
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
@@ -22,7 +22,7 @@ def create_AE_model(hidden):  # オートエンコーダを構築する関数
     return COPD_DAE
 
 
-def create_FT_model(hidden, w_AE1, w_AE2, w_AE3):  # ファインチューニングモデルを構築する関数
+def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):  # ファインチューニングモデルを構築する関数
   
     inputL = Input(shape=(inputs))
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
@@ -48,12 +48,10 @@ df_tweet_dataset = pd.read_csv('./Dataset/Dataset.csv', encoding='utf_8_sig')
 
 good_num = df_tweet_dataset['いいね数']
 
-
 past_user_information = df_tweet_dataset.drop(['Unnamed: 0', 'ツイートID', 'ツイートText', 'ツイートURL', 'キーワード', 'ツイート時刻', '鍵垢flag', 'ユーザID', 'いいね数'], axis=1)
 past_user_information = past_user_information.to_numpy()
 
 np.save('./saved_data/past_user_infomation.npy', past_user_information)
-
 
 x_train, x_test, t_train, t_test = train_test_split(df_tweet_dataset, good_num, train_size=0.8, random_state=0)
 
@@ -69,11 +67,11 @@ norm_x_test = mm.fit_transform(x_test)
 
 np.save('./saved_data/normalization_user_infomation.npy', norm_x_test)
 
-inputs = len(x_train.columns)
+AE_inputs_columns = len(x_train.columns)
 hidden = 64
 
 
-AE_model = create_AE_model(hidden)
+AE_model = create_AE_model(hidden, AE_inputs_columns)
 
 history = AE_model.fit(norm_x_train, t_train,
                        epochs=100,
@@ -92,7 +90,7 @@ weight_AE2.append(AE_model.layers[2].get_weights())
 weight_AE3.append(AE_model.layers[3].get_weights())
 weight_AE2[0]
 
-FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0])  
+FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], AE_inputs_columns)  
 
 history2 = FT_model.fit(norm_x_train, t_train, 
                      batch_size=29, 

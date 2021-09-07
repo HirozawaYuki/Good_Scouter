@@ -48,7 +48,7 @@ def make_tweet_w2v(input_sentence, timesteps, dictionary):
     return tweet_w2v
 
 
-def create_AE_model(hidden):
+def create_AE_model(hidden, inputs):
     
     inputL = Input(shape=(inputs))
     
@@ -65,7 +65,7 @@ def create_AE_model(hidden):
     return COPD_DAE
 
 
-def create_FT_model(hidden, w_AE1, w_AE2, w_AE3):
+def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):
   
     inputL = Input(shape=(inputs))
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
@@ -178,12 +178,10 @@ tweet_w2v = make_tweet_w2v(candidate_tweet, timesteps, dictionary)
 tweet_w2v = tweet_w2v.reshape(-1, timesteps)
 
 layer_name = 'bidirectionalx'
-# layer_name = 'layer_0'
 get_sentence_feature = Model(inputs=LSTM_Classification.input, outputs=LSTM_Classification.get_layer(layer_name).output)
 
 test_sentence_feature = get_sentence_feature([tweet_w2v])
 
-# normalization_user_information = np.load('./saved_data/normalization_user_information.npy')
 past_user_information = np.load('./saved_data/past_user_information.npy')
 
 test_input = []
@@ -206,8 +204,8 @@ normalization_candidate_tweet = normalization_tweet_data_include_candidate_tweet
 normalization_candidate_tweet = np.array(normalization_candidate_tweet)
 normalization_candidate_tweet = normalization_candidate_tweet.reshape(-1,  normalization_candidate_tweet.shape[0])
 
-
-AE_model = create_AE_model(hidden)
+AE_inputs_shape = normalization_candidate_tweet.shape[1]
+AE_model = create_AE_model(hidden, AE_inputs_shape)
 AE_model.load_weights('./saved_model/AutoEncoder_model.h5')
 weight_AE1 = []
 weight_AE2 = []
@@ -217,7 +215,7 @@ weight_AE1.append(AE_model.layers[1].get_weights())
 weight_AE2.append(AE_model.layers[2].get_weights())
 weight_AE3.append(AE_model.layers[3].get_weights())
 
-FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0])  
+FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], AE_inputs_shape)  
 FT_model.load_weights('./saved_model/fine_tuning_model.h5')
 
 good_test_output = FT_model.predict(normalization_candidate_tweet)
