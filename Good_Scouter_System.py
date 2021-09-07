@@ -29,8 +29,6 @@ def make_tweet_w2v(input_sentence, timesteps, dictionary):
     row_mecab = m.parse(input_sentence)
     row_mecab = row_mecab.split(' ')
 
-
-    vec_sentence = []
     count = 0
 
     for word in row_mecab:
@@ -60,7 +58,7 @@ def create_AE_model(hidden, inputs):
     
     COPD_DAE.compile(optimizer=Adam(lr=0.001), loss="mae")
     
-    COPD_DAE.summary()
+    # COPD_DAE.summary()
     
     return COPD_DAE
 
@@ -73,8 +71,6 @@ def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):
     x2 = Dense(hidden, activation="relu", name="dense3")(x1)
     outputL = Dense(1, activation="relu", name="dense4")(x2)
     FT_model = Model(inputs = inputL, outputs = outputL)
-    
-    FT_model.summary()
 
     FT_model.layers[1].set_weights(w_AE1)
     FT_model.layers[2].set_weights(w_AE2)
@@ -82,10 +78,9 @@ def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):
 
     FT_model.compile(optimizer=Adam(lr=0.001), loss='mae')
     
-    FT_model.summary()
+    # FT_model.summary()
     
     return FT_model
-
 
 keys = pd.read_csv('./Twitter_API_Key_dummy.csv', encoding='CP932')
 
@@ -102,14 +97,19 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 name = input("ユーザ名(半角英字)を入力してください:")
-candidate_tweet = input("ツイートを入力してください(140字以内):")
-time = input('何時間後のいいね数を予測しますか。(半角数字):')
-
 
 user = api.get_user(name)  # 入力情報を基にユーザ名の取得
 follow = user.friends_count  # 該当ユーザのフォロー数を代入
 follower = user.followers_count  # 該当ユーザのフォロワー数を代入
 total_tw = user.statuses_count  # 該当ユーザの総ツイート数を表示
+
+print('\nアカウント名:', user.name)
+print('フォローしているアカウント数:', follow)
+print('フォローワー数:', follower)
+print('これまでの総ツイート数:', total_tw, end='\n\n\n')
+
+candidate_tweet = input("ツイートを入力してください(140字以内):")
+time = input('何時間後のいいね数を予測しますか。(半角数字):')
 
 hidden = 64
 dim_z = 25
@@ -167,7 +167,7 @@ LSTM_Classification.compile(optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999),
                 loss={ 'out':'categorical_crossentropy'}, 
                 metrics=['acc'])
 
-LSTM_Classification.summary()
+# LSTM_Classification.summary()
 
 LSTM_Classification.load_weights('./saved_model/LSTM_Classification_weight.h5')
 
@@ -192,7 +192,6 @@ test_input.append(total_tw)
 test_input.extend(test_sentence_feature[0])
 test_input = np.array(test_input)
 test_input = test_input.reshape(-1, past_user_information.shape[1])
-# print(test_input)
 
 mm = preprocessing.MinMaxScaler()
 
@@ -219,4 +218,4 @@ FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], 
 FT_model.load_weights('./saved_model/fine_tuning_model.h5')
 
 good_test_output = FT_model.predict(normalization_candidate_tweet)
-print('予測されるいいね数:', int(good_test_output[0][0]))
+print('\n\n予測されるいいね数:', int(good_test_output[0][0]))
