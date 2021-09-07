@@ -183,7 +183,8 @@ get_sentence_feature = Model(inputs=LSTM_Classification.input, outputs=LSTM_Clas
 
 test_sentence_feature = get_sentence_feature([tweet_w2v])
 
-normalization_user_information = np.load('./saved_data/normalization_user_information.npy')
+# normalization_user_information = np.load('./saved_data/normalization_user_information.npy')
+past_user_information = np.load('./saved_data/past_user_information.npy')
 
 test_input = []
 test_input.append(follow)
@@ -192,13 +193,12 @@ test_input.append(int(time))
 test_input.append(total_tw)
 test_input.extend(test_sentence_feature[0])
 test_input = np.array(test_input)
-test_input = test_input.reshape(-1, normalization_user_information.shape[1])
-print(test_input)
+test_input = test_input.reshape(-1, past_user_information.shape[1])
+# print(test_input)
 
 mm = preprocessing.MinMaxScaler()
-normalization_user_inv = mm.inverse_transform(normalization_user_information)
 
-tweet_data_include_candidate_tweet = np.insert(normalization_user_inv, normalization_user_inv.shape[0], test_input, axis=0)
+tweet_data_include_candidate_tweet = np.insert(past_user_information, past_user_information.shape[0], test_input, axis=0)
 
 normalization_tweet_data_include_candidate_tweet = mm.fit_transform(tweet_data_include_candidate_tweet)
 
