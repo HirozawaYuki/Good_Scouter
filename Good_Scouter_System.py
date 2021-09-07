@@ -38,7 +38,7 @@ def make_tweet_w2v(input_sentence, timesteps, dictionary):
         if word not in dictionary:
             tweet_w2v.append(0)
         else:
-            dictionary.append(word)
+            tweet_w2v.append(dictionary.index[word])
 
         count += 1
     
