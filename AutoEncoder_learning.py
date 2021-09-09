@@ -73,7 +73,7 @@ hidden = 64
 
 AE_model = create_AE_model(hidden, AE_inputs_columns)
 
-history = AE_model.fit(norm_x_train, t_train,
+history = AE_model.fit(norm_x_train, norm_x_train,
                        epochs=100,
                        batch_size=32,
                        shuffle=True)
@@ -98,5 +98,3 @@ history2 = FT_model.fit(norm_x_train, t_train,
 
 FT_model.save('./saved_model/fine_tuning_model.h5')
 # FT_model.load_weights('./saved_model/fine_tuning_model.h5')
-
-
