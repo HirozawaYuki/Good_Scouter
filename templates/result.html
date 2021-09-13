@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>予測されるいいね数</title>
+    <meta charset="UTF-8" />
+    <link
+    rel="stylesheet"
+    href="static/css/bootstrap_4.5.0.min.css"
+    />
+    <link rel="stylesheet" href="static/css/styles.css" />
+  </head>
+
+  <body>
+
+    
+    <div class="container">
+      <div class="text-center mt-5 mb-5">
+        <h3>予測されるいいね数</h3>
+      </div>
+      <!-- <div id="main"></div> -->
+      <form action="/result" method="POST">
+        <div class="flex_container">
+            <div class="d-flex justify-content-center"> 
+                <img src="static/image/star.jpg" class="img-fluid" alt="Responsive image">
+                {{heart}}
+                <!-- <input type="submit" value="Submit"> -->
+            </div>
+        </div>
+        <div class="d-flex justify-content-around">
+            <button type="button" class="btn-success" id="big_size" onclick="location.href='./'">
+              初期画面へ
+            </button>
+            <button type="button" class="btn-success" id="small_size" onclick="location.href='./input_tweet'">
+              打ち直す
+            </button>
+        </div>
+      </form>
+
+    </div>
+
+    <!-- Bootstrap -->
+    <script
+      src="static/js/jquery-3.5.1.slim.min.js"
+    ></script>
+    <script
+      src="static/js/popper@1.16.0_popper.min.js"
+    ></script>
+    <script
+      src="static/js/4.5.0_bootstrap.min.js"
+    ></script>
+  </body>
+</html>
