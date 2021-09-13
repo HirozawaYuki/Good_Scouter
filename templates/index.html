@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <link
+    rel="stylesheet"
+    href="static/css/bootstrap_4.5.0.min.css"/>
+    <link rel="stylesheet" href="static/css/styles.css" />
+  </head>
+
+  <body>
+
+    
+    <div class="container">
+      <div class="text-center mt-5 mb-5">
+        <h3>ユーザー名を入力してください</h3>
+      </div>
+      <!-- <div id="main"></div> -->
+      <form action="/input_tweet" method="POST">
+        <div class="flex_container">
+            <div class="d-flex justify-content-center">
+                ＠
+                <input type="text" name="user_name" placeholder="ユーザー名（@○○）">
+                <!-- <input type="submit" value="Submit"> -->
+            </div>
+        </div>
+        <div class="flex_container">
+            <div class="d-flex justify-content-around">
+                <input type="submit" value="決定">                
+            </div>
+        </div>
+      </form>
+
+    </div>
+
+    <!-- Bootstrap -->
+    <script
+      src="static/js/jquery-3.5.1.slim.min.js"
+    ></script>
+    <script
+      src="static/js/popper@1.16.0_popper.min.js"
+    ></script>
+    <script
+      src="static/js/4.5.0_bootstrap.min.js"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,359 @@
+body {
+  font-family: sans-serif;
+  margin: 0px 3% 100px 3%;
+  background: #ffffff;
+}
+
+/* #parasol_image {
+  margin-left: 90%;
+  width: 10%;
+  height: 10%;
+} */
+
+#box_image {
+  margin-bottom: 3%;
+  width: 100%;
+  height: 95%;
+}
+
+#eco_bag_image {
+  /* margin-bottom: 5%; */
+  margin-left: 30%;
+  width: 40%;
+  height: 100%;
+}
+
+.image_div {
+  width: 100%;
+  height: 50%;
+}
+
+#meter_zone {
+  margin-top: 5%;
+  margin-left: 25%;
+  width: 50%;
+  height: 50px;
+}
+
+#meter_zone_over {
+  margin-top: 5%;
+  margin-left: 25%;
+  width: 100%;
+  height: 50px;
+}
+
+#cup {
+  margin-left: 80%;
+}
+
+#cup_over {
+  margin-left: 80%;
+  color: red;
+}
+
+.graph {
+  width: 100%;
+  opacity: 0.5;
+  /* position: absolute; */
+  /* bottom: 0; */
+  pointer-events: none;
+  transform:rotateX(180deg);
+}
+
+/* エラーメッセージに関するクラス */
+
+.error {
+  color: #ff0000;
+}
+
+/*Transform-box:fill-box*/
+.Header__shape {
+  animation-duration: 4s;
+  animation-timing-function: ease-in-out;
+}
+
+.myRect {
+  animation-name: change-height;
+}
+
+@keyframes change-height {
+  0% {
+    height: 0%;
+  }
+}
+
+#flex_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+.flex {
+  display: flex;
+}
+
+.user_list {
+  height: 50px;
+  margin: 20px 20px 0px;
+}
+
+.image_color {
+  height: 100%;
+}
+
+.user_name {
+  height: 100%;
+  font-size: xx-large;
+  text-align: center;
+}
+
+.attend {
+  background-color: white;
+  color: black;
+}
+
+.absent {
+  background-color: #04012c;
+  color: white;
+}
+
+.in_out {
+  height: 100%;
+}
+
+.in_image {
+  background-color: white;
+}
+
+.out_image {
+  background-color: #04012c;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.graph_image {
+  width: 60px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.graph_time {
+  /* max-width: 300px; */
+  padding: 0px 20px;
+  margin: 0px;
+}
+
+#big_size {
+  width: 28%;
+  height: 45%;
+  font-size:5em;
+  left: 4%;
+  /* bottom: 2%; */
+  /* background-color: #04012c; */
+  /* color: white; */
+  background-color: #61c359;
+  position: fixed;
+  font-weight: bold;
+  border-radius: 10%;
+  cursor: pointer;
+  background-image: url("./../image/eco_button.png");
+  background-repeat: no-repeat;
+  background-size: 70% auto;
+  background-position: center;
+}
+
+/* #mid_size {
+  width: 28%;
+  height: 25%;
+  font-size: 5em;
+  left: 36%;
+  background-color: #61c359;
+  position: fixed;
+  font-weight: bold;
+  border-radius: 10%;
+  cursor: pointer;
+  background-image: url("./../image/eco_button.png");
+  background-repeat: no-repeat;
+  background-size: 50% auto;
+  background-position: center;
+} */
+
+#small_size {
+  width: 28%;
+  height: 45%;
+  font-size: 5em;
+  left: 36%;
+  /* bottom: 2%; */
+  background-color: #61c359;
+  /* color: white; */
+  position: fixed;
+  font-weight: bold;
+  border-radius: 10%;
+  cursor: pointer;
+  background-image: url("./../image/eco_button.png");
+  background-repeat: no-repeat;
+  background-size: 30% auto;
+  background-position: center;
+}
+
+#none_bag {
+  width: 28%;
+  height: 45%;
+  font-size: 3em;
+  /* right: 2%; */
+  left:68%;
+  /* top: 65%; */
+  /* bottom: 2%; */
+  background-color:  #fcaa00;
+  /* color: white; */
+  position: fixed;
+  font-weight: bold;
+  border-radius: 10%;
+  cursor: pointer;
+  background-image: url("./../image/poli2.png");
+  background-repeat: no-repeat;
+  background-size: 50% auto;
+  background-position: center;
+}
+
+#custom {
+  width: 92%;
+  height: 15%;
+  font-size: 2em;
+  left: 4%;
+  top: 80%;
+  text-align: center;
+  /* bottom: 2%; */
+  /* background-color: #fcaa00; */
+  /* color: white; */
+  position: fixed;
+  font-weight: bold;
+  border-radius: 10%;
+  cursor: pointer;
+  background-image: url("./../image/setting.png");
+  background-repeat: no-repeat;
+  background-size: 10% auto;
+  background-position: left;
+}
+
+#ok {
+  width: 45%;
+  height: 15%;
+  font-size: 3em;
+  right: 2%;
+  /* top: 65%; */
+  bottom: 2%;
+  background-color:  #fcaa00;
+  /* color: white; */
+  position: fixed;
+  font-weight: bold;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+#custom_ok {
+  width: 40%;
+  height: 15%;
+  font-size: 3em;
+  right: 30%;
+  left: 30%;
+  /* top: 65%; */
+  bottom: 2%;
+  background-color:  #fcaa00;
+  /* color: white; */
+  position: fixed;
+  font-weight: bold;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+#font-custom {
+  text-align: center;
+}
+
+.unit {
+  margin-left: 90%;
+  font-size: 1.5em;
+}
+
+#back_size_display {
+  width: 15%;
+  height: 10%;
+  font-size: 1.5em;
+  left: 0%;
+  top: 0%;
+  position: fixed;
+  font-weight: bold;
+  border-radius: 10%;
+  cursor: pointer;
+  background-image: url("./../image/back.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+#retake {
+  width: 45%;
+  height: 15%;
+  font-size: 3em;
+  left: 2%;
+  /* top: 65%; */
+  bottom: 2%;
+  background-color:  #61c359;
+  /* color: white; */
+  position: fixed;
+  font-weight: bold;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+.result_text {
+  font-size: 3em;
+  /* margin-top: 20%; */
+  text-align: center;
+  /* margin-left: 20%; */
+}
+
+/* 管理画面に使うスタイル */
+.wrap > input {
+  display: block;
+}
+
+div {
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+/* 以下，wakamoto変更：ヘッダ用*/
+.Header {
+  position: relative; /* ヘッダーを固定する */
+  top: 0; /* 上部から配置の基準位置を決める */
+  left: -3%; /* 左から配置の基準位置を決める */
+  width: 106%; /* ヘッダーの横幅を指定する */
+  height: 10vh; /* ヘッダーの高さを指定する */
+  padding: 10px; /* ヘッダー内側の余白を指定する(上下左右) */
+  padding-left: 35%;
+  padding-right: 35%;
+  font-size: 1.5em;
+  background-color: #ffecb9; /* ヘッダーの背景色を指定する */
+  color: #000; /* ヘッダーのフォントの色を指定する */
+  border-bottom: 3px solid #ffecb9; /* ヘッダーの境界線（下部）を指定する */
+  box-shadow: 0 7px 10px 2px #aaaaaa; /* 影を指定（[右][下][ぼかし][広がり][影の色]） */
+  cursor: pointer;
+  background-image: url("./../image/logo2.png");
+  background-repeat: no-repeat;
+  background-size: 20% auto;
+  background-position: center;
+}
