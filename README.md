@@ -13,6 +13,11 @@ $ pip install scikit-learn <br>
 $ pip install Flask <br>
 他<br><br>
 
+## * 動作環境
+python == 3.6.1
+TensorFlow == 2.2.2
+（パッケージcoloramaもインストールする必要があるかもしれません）
+
 ## * プログラムについて
   * make_tweet_Dataset.py　(実行は一度で良い) <br>
     APIキーやACCESS Tokenを登録して(念のためダミーデータを入れているので実行する際は正しいデータに置き換える必要あり)、ツイートをキーワード検索してcsv(test.csv)に格納する。 <br><br>
