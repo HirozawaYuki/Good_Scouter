@@ -10,6 +10,7 @@ $ pip install mecab-python3 <br>
 $ pip install unidic-lite <br>
 $ pip install tweepy==3.10.0 <br>
 $ pip install scikit-learn <br>
+$ pip install Flask <br>
 他<br><br>
 
 ## * プログラムについて
