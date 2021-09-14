@@ -121,8 +121,9 @@ def tweet():
 
     else:
         user = api.get_user(user_name)  # 入力情報を基にユーザー名の取得
+        icon_url = user.profile_image_url_https  # ★ユーザーのプロフィール画像のURLを代入
 
-        return render_template("input_tweet.html", name=user_name)
+        return render_template("input_tweet.html", name=user.name, icon_url=icon_url)
 
 
 @app.route("/result", methods=["post"])
