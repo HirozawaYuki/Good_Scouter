@@ -14,9 +14,10 @@ $ pip install Flask <br>
 他<br><br>
 
 ## * 動作環境
-python == 3.6.1
-TensorFlow == 2.2.2
-（パッケージcoloramaもインストールする必要があるかもしれません）
+python == 3.6.1 <br>
+TensorFlow == 2.2.2 <br>
+（パッケージcoloramaもインストールする必要があるかもしれません） <br>
+<br>
 
 ## * プログラムについて
   * make_tweet_Dataset.py　(実行は一度で良い) <br>
