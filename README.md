@@ -10,7 +10,14 @@ $ pip install mecab-python3 <br>
 $ pip install unidic-lite <br>
 $ pip install tweepy==3.10.0 <br>
 $ pip install scikit-learn <br>
+$ pip install Flask <br>
 他<br><br>
+
+## * 動作環境
+python == 3.6.1 <br>
+TensorFlow == 2.2.2 <br>
+（パッケージcoloramaもインストールする必要があるかもしれません） <br>
+<br>
 
 ## * プログラムについて
   * make_tweet_Dataset.py　(実行は一度で良い) <br>
@@ -29,5 +36,5 @@ $ pip install scikit-learn <br>
     「該当ユーザ名(@の後の半角英字)」、「何時間後のいいねを予測してほしいか」、「ツイートしたい文章」を入力するといいね数を返してくれる。 <br><br>
 
 ## * 今後の予定
-  * フロントエンド部の実装<br>
+  * フロントエンド部のデザインの変更<br>
   * 余裕があれば、ユーザ情報入力後、そのユーザーの直近ツイートといいね数も学習に加える機能の追加

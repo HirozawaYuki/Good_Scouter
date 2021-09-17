@@ -15,6 +15,7 @@ from tensorflow.keras.layers import (Embedding, Dense,
                                      Lambda, Input, LSTM, Bidirectional, Dropout, Reshape)
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
+from flask import Flask, render_template, Response, redirect, url_for, session, request
 
 
 def make_tweet_w2v(input_sentence, timesteps, dictionary):
@@ -82,140 +83,168 @@ def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):
     
     return FT_model
 
-keys = pd.read_csv('./Twitter_API_Key_dummy.csv', encoding='CP932')
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    user_name = ""  # ユーザー名の初期化
+    hour = 0  # 時間の初期化
+    
+    return render_template('./index.html')
+
+@app.route("/input_tweet", methods=["post"])
+def tweet():
+    user_name = request.form["user_name"]
+
+    keys = pd.read_csv('./Twitter_API_Key_dummy.csv', encoding='CP932')
 
 
-key_data = keys['key']
+    key_data = keys['key']
 
-API_KEY = key_data[0]
-API_SECRET = key_data[1]
-ACCESS_TOKEN = key_data[2]
-ACCESS_TOKEN_SECRET = key_data[3]
+    API_KEY = key_data[0]
+    API_SECRET = key_data[1]
+    ACCESS_TOKEN = key_data[2]
+    ACCESS_TOKEN_SECRET = key_data[3]
 
-auth = tweepy.OAuthHandler(API_KEY, API_SECRET)
-auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-api = tweepy.API(auth)
+    auth = tweepy.OAuthHandler(API_KEY, API_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+    global api, user
+    api = tweepy.API(auth)
 
-name = input("ユーザ名(半角英字)を入力してください:")
+    # ユーザー情報を取得する処理
+    try:
+        user = api.get_user(user_name)
+    # エラー処理
+    except tweepy.error.TweepError:
 
-user = api.get_user(name)  # 入力情報を基にユーザ名の取得
-follow = user.friends_count  # 該当ユーザのフォロー数を代入
-follower = user.followers_count  # 該当ユーザのフォロワー数を代入
-total_tw = user.statuses_count  # 該当ユーザの総ツイート数を表示
+        return render_template("index.html")
 
-print('\nアカウント名:', user.name)
-print('フォローしているアカウント数:', follow)
-print('フォローワー数:', follower)
-print('これまでの総ツイート数:', total_tw, end='\n\n\n')
+    else:
+        user = api.get_user(user_name)  # 入力情報を基にユーザー名の取得
+        icon_url = user.profile_image_url_https  # ★ユーザーのプロフィール画像のURLを代入
 
-candidate_tweet = input("ツイートを入力してください(140字以内):")
-time = input('何時間後のいいね数を予測しますか。(半角数字):')
+        return render_template("input_tweet.html", name=user.name, icon_url=icon_url)
 
-hidden = 64
-dim_z = 25
-timesteps = 115  # 今回のシステムでは、140にしておけばよかったと後悔
-cls_num = 5
-w2v = np.load('./saved_data/w2v.npy')
-input_dim_w2v = w2v.shape[0]
-dim_embedding = w2v.shape[1]
 
-inputs = Input(shape=(timesteps, ))
+@app.route("/result", methods=["post"])
+def result():
+    time = request.form["time_hour"]
 
-# inputsをw2vでベクトル化
-embed = Embedding(input_dim_w2v, 
-                  dim_embedding, 
-                  input_length=timesteps, 
-                  weights=[w2v], 
-                  mask_zero=True, 
-                  trainable=False, 
-                  name='layer_0')(inputs)
+    candidate_tweet = request.form["tweet"]  # ツイート情報を取得
+    follow = user.friends_count  # 該当ユーザのフォロー数を代入
+    follower = user.followers_count  # 該当ユーザのフォロワー数を代入
+    total_tw = user.statuses_count  # 該当ユーザの総ツイート数を表示
 
-embed_dim = Lambda(lambda x: K.expand_dims(x, 1), output_shape=(1, timesteps, dim_embedding, ))(embed)
+    hidden = 64
+    dim_z = 25
+    timesteps = 115  # 今回のシステムでは、140にしておけばよかったと後悔
+    cls_num = 5
+    w2v = np.load('./saved_data/w2v.npy')
+    input_dim_w2v = w2v.shape[0]
+    dim_embedding = w2v.shape[1]
 
-c0x = GlobalAveragePooling2D(name='layer_2x')(embed_dim)
-c1x = Dense(dim_embedding//2, activation="relu", name='layer_3x')(c0x)
-c2x = Dense(dim_embedding, activation="sigmoid", name='layer_4x')(c1x)
-c2x = Reshape((1, dim_embedding), input_shape=(dim_embedding,))(c2x)
+    inputs = Input(shape=(timesteps, ))
 
-cx = Multiply(name='layer_5x')([embed, c2x])
+    # inputsをw2vでベクトル化
+    embed = Embedding(input_dim_w2v, 
+                    dim_embedding, 
+                    input_length=timesteps, 
+                    weights=[w2v], 
+                    mask_zero=True, 
+                    trainable=False, 
+                    name='layer_0')(inputs)
 
-sx = Conv2D(1, 1, activation='sigmoid', name='layer_6x')(embed_dim)
-sx = Multiply(name='layer_7x')([embed, sx])
+    embed_dim = Lambda(lambda x: K.expand_dims(x, 1), output_shape=(1, timesteps, dim_embedding, ))(embed)
 
-sx = Lambda(lambda x: tf.squeeze(x, 1), name='layer_8x')(sx)
+    c0x = GlobalAveragePooling2D(name='layer_2x')(embed_dim)
+    c1x = Dense(dim_embedding//2, activation="relu", name='layer_3x')(c0x)
+    c2x = Dense(dim_embedding, activation="sigmoid", name='layer_4x')(c1x)
+    c2x = Reshape((1, dim_embedding), input_shape=(dim_embedding,))(c2x)
 
-attx = layers.add([cx, sx])
+    cx = Multiply(name='layer_5x')([embed, c2x])
 
-encodedx = Bidirectional(
-    LSTM(dim_z, 
-         batch_input_shape=(None, timesteps, dim_embedding), 
-         activation="tanh", 
-         recurrent_activation="sigmoid", 
-         return_sequences=False
-         ),
-    name='bidirectionalx')(attx)
+    sx = Conv2D(1, 1, activation='sigmoid', name='layer_6x')(embed_dim)
+    sx = Multiply(name='layer_7x')([embed, sx])
 
-encodedx = Dropout(0.2)(encodedx)
+    sx = Lambda(lambda x: tf.squeeze(x, 1), name='layer_8x')(sx)
 
-out = Dense(units=cls_num, activation='softmax', name='out')(encodedx)
+    attx = layers.add([cx, sx])
 
-# ---------------------------------------------------------------------------------------
+    encodedx = Bidirectional(
+        LSTM(dim_z, 
+            batch_input_shape=(None, timesteps, dim_embedding), 
+            activation="tanh", 
+            recurrent_activation="sigmoid", 
+            return_sequences=False
+            ),
+        name='bidirectionalx')(attx)
 
-LSTM_Classification = Model(inputs, out, name='LSTM_Classification')
+    encodedx = Dropout(0.2)(encodedx)
 
-LSTM_Classification.compile(optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999), 
-                loss={ 'out':'categorical_crossentropy'}, 
-                metrics=['acc'])
+    out = Dense(units=cls_num, activation='softmax', name='out')(encodedx)
 
-# LSTM_Classification.summary()
+    # ---------------------------------------------------------------------------------------
 
-LSTM_Classification.load_weights('./saved_model/LSTM_Classification_weight.h5')
+    LSTM_Classification = Model(inputs, out, name='LSTM_Classification')
 
-f = open('./saved_data/dictionary.txt', 'rb')
-dictionary = pickle.load(f)
+    LSTM_Classification.compile(optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999), 
+                    loss={ 'out':'categorical_crossentropy'}, 
+                    metrics=['acc'])
 
-tweet_w2v = make_tweet_w2v(candidate_tweet, timesteps, dictionary)
-tweet_w2v = tweet_w2v.reshape(-1, timesteps)
+    # LSTM_Classification.summary()
 
-layer_name = 'bidirectionalx'
-get_sentence_feature = Model(inputs=LSTM_Classification.input, outputs=LSTM_Classification.get_layer(layer_name).output)
+    LSTM_Classification.load_weights('./saved_model/LSTM_Classification_weight.h5')
 
-test_sentence_feature = get_sentence_feature([tweet_w2v])
+    f = open('./saved_data/dictionary.txt', 'rb')
+    dictionary = pickle.load(f)
 
-past_user_information = np.load('./saved_data/past_user_information.npy')
+    tweet_w2v = make_tweet_w2v(candidate_tweet, timesteps, dictionary)
+    tweet_w2v = tweet_w2v.reshape(-1, timesteps)
 
-test_input = []
-test_input.append(follow)
-test_input.append(follower)
-test_input.append(int(time))
-test_input.append(total_tw)
-test_input.extend(test_sentence_feature[0])
-test_input = np.array(test_input)
-test_input = test_input.reshape(-1, past_user_information.shape[1])
+    layer_name = 'bidirectionalx'
+    get_sentence_feature = Model(inputs=LSTM_Classification.input, outputs=LSTM_Classification.get_layer(layer_name).output)
 
-mm = preprocessing.MinMaxScaler()
+    test_sentence_feature = get_sentence_feature([tweet_w2v])
 
-tweet_data_include_candidate_tweet = np.insert(past_user_information, past_user_information.shape[0], test_input, axis=0)
+    past_user_information = np.load('./saved_data/past_user_information.npy')
 
-normalization_tweet_data_include_candidate_tweet = mm.fit_transform(tweet_data_include_candidate_tweet)
+    test_input = []
+    test_input.append(follow)
+    test_input.append(follower)
+    test_input.append(int(time))
+    test_input.append(total_tw)
+    test_input.extend(test_sentence_feature[0])
+    test_input = np.array(test_input)
+    test_input = test_input.reshape(-1, past_user_information.shape[1])
 
-normalization_candidate_tweet = normalization_tweet_data_include_candidate_tweet[-1]
-normalization_candidate_tweet = np.array(normalization_candidate_tweet)
-normalization_candidate_tweet = normalization_candidate_tweet.reshape(-1,  normalization_candidate_tweet.shape[0])
+    mm = preprocessing.MinMaxScaler()
 
-AE_inputs_shape = normalization_candidate_tweet.shape[1]
-AE_model = create_AE_model(hidden, AE_inputs_shape)
-AE_model.load_weights('./saved_model/AutoEncoder_model.h5')
-weight_AE1 = []
-weight_AE2 = []
-weight_AE3 = []
+    tweet_data_include_candidate_tweet = np.insert(past_user_information, past_user_information.shape[0], test_input, axis=0)
 
-weight_AE1.append(AE_model.layers[1].get_weights())
-weight_AE2.append(AE_model.layers[2].get_weights())
-weight_AE3.append(AE_model.layers[3].get_weights())
+    normalization_tweet_data_include_candidate_tweet = mm.fit_transform(tweet_data_include_candidate_tweet)
 
-FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], AE_inputs_shape)  
-FT_model.load_weights('./saved_model/fine_tuning_model.h5')
+    normalization_candidate_tweet = normalization_tweet_data_include_candidate_tweet[-1]
+    normalization_candidate_tweet = np.array(normalization_candidate_tweet)
+    normalization_candidate_tweet = normalization_candidate_tweet.reshape(-1,  normalization_candidate_tweet.shape[0])
 
-good_test_output = FT_model.predict(normalization_candidate_tweet)
-print('\n\n予測されるいいね数:', int(good_test_output[0][0]))
+    AE_inputs_shape = normalization_candidate_tweet.shape[1]
+    AE_model = create_AE_model(hidden, AE_inputs_shape)
+    AE_model.load_weights('./saved_model/AutoEncoder_model.h5')
+    weight_AE1 = []
+    weight_AE2 = []
+    weight_AE3 = []
+
+    weight_AE1.append(AE_model.layers[1].get_weights())
+    weight_AE2.append(AE_model.layers[2].get_weights())
+    weight_AE3.append(AE_model.layers[3].get_weights())
+
+    FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], AE_inputs_shape)  
+    FT_model.load_weights('./saved_model/fine_tuning_model.h5')
+
+    good_test_output = FT_model.predict(normalization_candidate_tweet)
+    heart = int(good_test_output[0][0])
+
+    return render_template("result.html", heart=heart)
+
+if __name__ == '__main__':
+    app.run(host='localhost', debug=True, port=8080)
