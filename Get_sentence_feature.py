@@ -79,6 +79,7 @@ dictionary, vec_data, len_sentence = make_dictionary(tweet_text, dictionary)
 f = open('./saved_data/dictionary.txt', 'wb')
 list_row = dictionary
 pickle.dump(list_row, f)
+f.close()
 # ----------------------------------------------
 
 
