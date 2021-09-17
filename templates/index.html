@@ -1,37 +1,53 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Home</title>
+    <title>いいね☆スカウター</title>
+    <link rel="icon" type="image/png" sizes="180x180" href="static/image/icon.png" />
     <meta charset="UTF-8" />
     <link
     rel="stylesheet"
     href="static/css/bootstrap_4.5.0.min.css"/>
     <link rel="stylesheet" href="static/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
   </head>
 
   <body>
-
-    
+    <div class="container-fluid mx-0 px-0">
+      <img
+        class="d-block mb-5"
+        id="yubi"
+        width="100%"
+        src="static/image/Group2.png"
+        onclick="location.href='./'"
+        　
+      />
+    </div>
     <div class="container">
-      <div class="text-center mt-5 mb-5">
-        <h3>ユーザー名を入力してください</h3>
-      </div>
       <!-- <div id="main"></div> -->
       <form action="/input_tweet" method="POST">
-        <div class="flex_container">
-            <div class="d-flex justify-content-center">
-                ＠
-                <input type="text" name="user_name" placeholder="ユーザー名（@○○）">
-                <!-- <input type="submit" value="Submit"> -->
-            </div>
-        </div>
-        <div class="flex_container">
-            <div class="d-flex justify-content-around">
-                <input type="submit" value="決定">                
-            </div>
+        <div class="input-group">
+          <span class="input-group-text mt-5" id="basic-addon1">@</span>
+          <input
+            name = "user_name"
+            id="text"
+            type="text"
+            class="form-control mt-5"
+            maxlength="15"
+            required
+            placeholder="ユーザー名を入力してください"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+          />
+          <button class="btn btn-outline-primary mt-5" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
       </form>
-
     </div>
 
     <!-- Bootstrap -->
@@ -44,5 +60,11 @@
     <script
       src="static/js/4.5.0_bootstrap.min.js"
     ></script>
+
+    <script type="text/javascript">
+      $("#text").tooltip({
+        title: "@Y.Hirozawa0827のY.Hirozawa0827を入力してください"
+      });
+    </script>
   </body>
 </html>

@@ -1,7 +1,11 @@
 body {
   font-family: sans-serif;
-  margin: 0px 3% 100px 3%;
+  margin: 0px 0px 15% 0px;
   background: #ffffff;
+}
+
+#yubi {
+  cursor: pointer;
 }
 
 /* #parasol_image {
@@ -57,7 +61,7 @@ body {
   /* position: absolute; */
   /* bottom: 0; */
   pointer-events: none;
-  transform:rotateX(180deg);
+  transform: rotateX(180deg);
 }
 
 /* エラーメッセージに関するクラス */
@@ -153,7 +157,7 @@ body {
 #big_size {
   width: 28%;
   height: 45%;
-  font-size:5em;
+  font-size: 5em;
   left: 4%;
   /* bottom: 2%; */
   /* background-color: #04012c; */
@@ -208,10 +212,10 @@ body {
   height: 45%;
   font-size: 3em;
   /* right: 2%; */
-  left:68%;
+  left: 68%;
   /* top: 65%; */
   /* bottom: 2%; */
-  background-color:  #fcaa00;
+  background-color: #fcaa00;
   /* color: white; */
   position: fixed;
   font-weight: bold;
@@ -250,7 +254,7 @@ body {
   right: 2%;
   /* top: 65%; */
   bottom: 2%;
-  background-color:  #fcaa00;
+  background-color: #fcaa00;
   /* color: white; */
   position: fixed;
   font-weight: bold;
@@ -266,7 +270,7 @@ body {
   left: 30%;
   /* top: 65%; */
   bottom: 2%;
-  background-color:  #fcaa00;
+  background-color: #fcaa00;
   /* color: white; */
   position: fixed;
   font-weight: bold;
@@ -306,7 +310,7 @@ body {
   left: 2%;
   /* top: 65%; */
   bottom: 2%;
-  background-color:  #61c359;
+  background-color: #61c359;
   /* color: white; */
   position: fixed;
   font-weight: bold;
