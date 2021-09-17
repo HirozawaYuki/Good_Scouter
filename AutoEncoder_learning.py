@@ -10,7 +10,7 @@ def create_AE_model(hidden, inputs):  # オートエンコーダを構築する�
     inputL = Input(shape=(inputs))
     
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
-    x1 = Dense(32, activation="relu", name="dense2")(x)
+    x1 = Dense(10, activation="relu", name="dense2")(x)
     x2 = Dense(hidden, activation="relu", name="dense3")(x1)
     outputL = Dense(inputs, name="dense4")(x2)
     COPD_DAE = Model(inputs = inputL, outputs = outputL)
@@ -26,7 +26,7 @@ def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):  # ファインチュ�
   
     inputL = Input(shape=(inputs))
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
-    x1 = Dense(32, activation="relu", name="dense2")(x)
+    x1 = Dense(10, activation="relu", name="dense2")(x)
     x2 = Dense(hidden, activation="relu", name="dense3")(x1)
     outputL = Dense(1, activation="relu", name="dense4")(x2)
     FT_model = Model(inputs = inputL, outputs = outputL)
@@ -68,7 +68,7 @@ norm_x_test = mm.fit_transform(x_test)
 np.save('./saved_data/normalization_user_infomation.npy', norm_x_test)
 
 AE_inputs_columns = len(x_train.columns)
-hidden = 64
+hidden = 32
 
 
 AE_model = create_AE_model(hidden, AE_inputs_columns)
