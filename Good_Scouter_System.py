@@ -191,8 +191,6 @@ def result():
                     loss={ 'out':'categorical_crossentropy'}, 
                     metrics=['acc'])
 
-    # LSTM_Classification.summary()
-
     LSTM_Classification.load_weights('./saved_model/LSTM_Classification_weight.h5')
 
     f = open('./saved_data/dictionary.txt', 'rb')
