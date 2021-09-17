@@ -197,6 +197,7 @@ def result():
 
     f = open('./saved_data/dictionary.txt', 'rb')
     dictionary = pickle.load(f)
+    f.close()
 
     tweet_w2v = make_tweet_w2v(candidate_tweet, timesteps, dictionary)
     tweet_w2v = tweet_w2v.reshape(-1, timesteps)
