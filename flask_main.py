@@ -9,7 +9,6 @@ def index():
     return render_template('./index.html')
 
 
-
 @app.route("/input_tweet",methods=["post"])
 def tweet():
     user_name = request.form["user_name"]
@@ -18,6 +17,9 @@ def tweet():
     
     # エラー処理（ユーザー情報取得失敗）
     
+    # if user_name=NONE:
+
+    #     return render_template("input.html", name=user_name)
 
     return render_template("input_tweet.html", name=user_name)
 
