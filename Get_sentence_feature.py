@@ -61,7 +61,7 @@ dim_z = 25  # LSTMの特徴ベクトル次元数
 
 tf.random.set_seed(0)
 
-tweet_information = pd.read_csv('./Dataset/test.csv', encoding='CP932')
+tweet_information = pd.read_csv('./Dataset/test.csv', encoding='utf_8_sig')
 
 # print(tweet_information)
 
@@ -267,4 +267,3 @@ cls = model_trial.predict([input_w2v])
 
 
 pd.DataFrame(cls).to_csv('./Dataset/feature.csv')  # 取得した特徴量をcsvファイルに出力
-
