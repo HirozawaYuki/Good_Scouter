@@ -1,13 +1,14 @@
 import tweepy
 import datetime
 import pandas as pd
+import pickle
 
 # キーワードの結果をcsvファイルに書き出すために情報をDataFrameに登録する関数　引数(現在のDataFrame, キーワード, 文章数, ジャンル(自身で決定))
 
 def register_sentences(df, search_keyword, sentence_count, genre):
 #   print(search_keyword)
   tweets = api.search(q=search_keyword, count=sentence_count, tweet_mode='extended')
-  tweet_data = []
+  
 
   date = datetime.datetime.now() + datetime.timedelta(hours=9)  # 現在時刻の取得
 
@@ -64,30 +65,39 @@ df = pd.DataFrame(columns=['ツイートID', 'ツイートText', 'いいね数',
 # キーワード検索で探索(条件：リプライやURL,画像, 動画付きツイートを除外、いいね数が5以上で2021年8月31日22時までにツイートされたもの) 8月31日23時40分現在
 
 # df = register_sentences(df, search_keyword, sentence_count, genre)
-SEARCH_WORD = "人工知能 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"  # 「人工知能」とキーワード検索
-df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
-SEARCH_WORD = "野球 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
-SEARCH_WORD = "5G exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
-SEARCH_WORD = "サッカー exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
-SEARCH_WORD = "バドミントン exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
-SEARCH_WORD = "フジロック exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "音楽")
-SEARCH_WORD = "紅白歌合戦 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "音楽")
-SEARCH_WORD = "為替 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "金融")
-SEARCH_WORD = "日銀 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "金融")
-SEARCH_WORD = "衆院選 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "政治")
-SEARCH_WORD = "IoT exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
-SEARCH_WORD = "自民党 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
-df = register_sentences(df, SEARCH_WORD, 100, "政治")
+# SEARCH_WORD = "人工知能 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"  # 「人工知能」とキーワード検索
+# df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
+# SEARCH_WORD = "野球 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
+# SEARCH_WORD = "5G exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
+# SEARCH_WORD = "サッカー exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
+# SEARCH_WORD = "バドミントン exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
+# SEARCH_WORD = "フジロック exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "音楽")
+# SEARCH_WORD = "紅白歌合戦 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "音楽")
+# SEARCH_WORD = "為替 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "金融")
+# SEARCH_WORD = "日銀 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "金融")
+# SEARCH_WORD = "衆院選 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "政治")
+# SEARCH_WORD = "IoT exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
+# SEARCH_WORD = "自民党 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
+# df = register_sentences(df, SEARCH_WORD, 100, "政治")
 
-df.to_csv('./Dataset/test.csv', mode='w', encoding='utf_8_sig')
+date = datetime.datetime.now()
+date_info = '{}{}'.format(str(date.month).zfill(2), str(date.day).zfill(2))
 
+# ---------------日時データの保存----------------
+f = open('./saved_data/date_info.txt', 'wb')
+pickle.dump(date_info, f)
+f.close()
+#-----------------------------------------------
+
+# df.to_csv('./Dataset/test.csv', mode='w', encoding='utf_8_sig')
+df.to_csv('./Dataset/test_'+date_info+'.csv', mode='w', encoding='utf_8_sig')  # 日にち毎に違うフォルダにデータを保存したい場合はこちらを利用
