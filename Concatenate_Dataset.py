@@ -9,7 +9,7 @@ f.close()
 
 # ----ツイート情報の抽出-----
 # tweet_information = pd.read_csv('./Dataset/test.csv', encoding='CP932')
-tweet_information = pd.read_csv('./Dataset/test_'+date_info+'.csv', encoding='CP932')
+tweet_information = pd.read_csv('./Dataset/test_'+date_info+'.csv', encoding='utf_8_sig')
 
 t_columns = list(tweet_information.columns)
 del t_columns[0]
@@ -20,7 +20,7 @@ tweet_information = tweet_information.loc[0:len_tweet_information_index-1, t_col
 # ---------------------------
 # -----特徴量部の抽出---------
 # data = pd.read_csv('./Dataset/feature.csv', encoding='CP932')
-data = pd.read_csv('./Dataset/feature'+date_info+'.csv', encoding='CP932')
+data = pd.read_csv('./Dataset/feature_'+date_info+'.csv', encoding='utf_8_sig')
 
 l_columns = list(data.columns)
 del l_columns[0]

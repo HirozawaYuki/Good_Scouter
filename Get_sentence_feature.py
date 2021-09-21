@@ -67,7 +67,7 @@ date_info = pickle.load(f)
 f.close()
 
 # tweet_information = pd.read_csv('./Dataset/test.csv', encoding='CP932')
-tweet_information = pd.read_csv('./Dataset/test_'+date_info+'.csv', encoding='CP932')
+tweet_information = pd.read_csv('./Dataset/test_'+date_info+'.csv', encoding='utf_8_sig')
 
 # print(tweet_information)
 
@@ -277,4 +277,3 @@ cls = model_trial.predict([input_w2v])
 
 # pd.DataFrame(cls).to_csv('./Dataset/feature.csv')  # 取得した特徴量をcsvファイルに出力
 pd.DataFrame(cls).to_csv('./Dataset/feature_'+date_info+'.csv')  # 日付毎にデータを保持したい場合はこちらを実行
-

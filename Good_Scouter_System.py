@@ -37,7 +37,7 @@ def make_tweet_w2v(input_sentence, timesteps, dictionary):
         if word not in dictionary:
             tweet_w2v.append(0)
         else:
-            tweet_w2v.append(dictionary.index[word])
+            tweet_w2v.append(dictionary.index(word))
 
         count += 1
     
@@ -126,7 +126,7 @@ def tweet():
 
     else:
         user = api.get_user(user_name)  # 入力情報を基にユーザー名の取得
-        icon_url = user.profile_image_url_https  # ★ユーザーのプロフィール画像のURLを代入
+        icon_url = user.profile_image_url_https  # ユーザーのプロフィール画像のURLの取得
 
         return render_template("input_tweet.html", name=user.name, icon_url=icon_url)
 
