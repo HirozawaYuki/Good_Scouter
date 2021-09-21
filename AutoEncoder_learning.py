@@ -51,7 +51,7 @@ good_num = df_tweet_dataset['いいね数']
 past_user_information = df_tweet_dataset.drop(['Unnamed: 0', 'ツイートID', 'ツイートText', 'ツイートURL', 'キーワード', 'ツイート時刻', '鍵垢flag', 'ユーザID', 'いいね数'], axis=1)
 past_user_information = past_user_information.to_numpy()
 
-np.save('./saved_data/past_user_infomation.npy', past_user_information)
+np.save('./saved_data/past_user_information.npy', past_user_information)
 
 x_train, x_test, t_train, t_test = train_test_split(df_tweet_dataset, good_num, train_size=0.8, random_state=0)
 
@@ -65,7 +65,7 @@ mm = preprocessing.MinMaxScaler()
 norm_x_train = mm.fit_transform(x_train)
 norm_x_test = mm.fit_transform(x_test)
 
-np.save('./saved_data/normalization_user_infomation.npy', norm_x_test)
+np.save('./saved_data/normalization_user_information.npy', norm_x_test)
 
 AE_inputs_columns = len(x_train.columns)
 hidden = 64
