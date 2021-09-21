@@ -5,6 +5,7 @@ from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.optimizers import Adam
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
+import pickle
 
 def create_AE_model(hidden, inputs):  # オートエンコーダを構築する関数
     inputL = Input(shape=(inputs))
@@ -44,14 +45,21 @@ def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):  # ファインチュ�
     return FT_model
 
 
-df_tweet_dataset = pd.read_csv('./Dataset/Dataset.csv', encoding='utf_8_sig')
+# 日付情報を取得
+f = open('./saved_data/date_info.txt', 'rb')
+date_info = pickle.load(f)
+f.close()
+
+# df_tweet_dataset = pd.read_csv('./Dataset/Dataset.csv', encoding='utf_8_sig')
+df_tweet_dataset = pd.read_csv('./Dataset/Dataset_'+date_info+'.csv', encoding='utf_8_sig')
 
 good_num = df_tweet_dataset['いいね数']
 
 past_user_information = df_tweet_dataset.drop(['Unnamed: 0', 'ツイートID', 'ツイートText', 'ツイートURL', 'キーワード', 'ツイート時刻', '鍵垢flag', 'ユーザID', 'いいね数'], axis=1)
 past_user_information = past_user_information.to_numpy()
 
-np.save('./saved_data/past_user_infomation.npy', past_user_information)
+# np.save('./saved_data/past_user_information.npy', past_user_information)
+np.save('./saved_data/past_user_information_'+date_info+'.npy', past_user_information)
 
 x_train, x_test, t_train, t_test = train_test_split(df_tweet_dataset, good_num, train_size=0.8, random_state=0)
 
@@ -65,7 +73,8 @@ mm = preprocessing.MinMaxScaler()
 norm_x_train = mm.fit_transform(x_train)
 norm_x_test = mm.fit_transform(x_test)
 
-np.save('./saved_data/normalization_user_infomation.npy', norm_x_test)
+# np.save('./saved_data/normalization_user_information.npy', norm_x_test)
+np.save('./saved_data/normalization_user_information_'+date_info+'.npy', norm_x_test)
 
 AE_inputs_columns = len(x_train.columns)
 hidden = 64
@@ -78,8 +87,8 @@ history = AE_model.fit(norm_x_train, norm_x_train,
                        batch_size=32,
                        shuffle=True)
 
-AE_model.save('./saved_model/AutoEncoder_model.h5')
-# AE_model.load_weights('./saved_model/AutoEncoder_model.h5')
+# AE_model.save('./saved_model/AutoEncoder_model.h5')
+AE_model.save('./saved_model/AutoEncoder_model_'+date_info+'.h5')
 
 weight_AE1 = []
 weight_AE2 = []
@@ -96,5 +105,5 @@ history2 = FT_model.fit(norm_x_train, t_train,
                      batch_size=29, 
                      epochs=100)
 
-FT_model.save('./saved_model/fine_tuning_model.h5')
-# FT_model.load_weights('./saved_model/fine_tuning_model.h5')
+# FT_model.save('./saved_model/fine_tuning_model.h5')
+FT_model.save('./saved_model/fine_tuning_model_'+date_info+'.h5')
