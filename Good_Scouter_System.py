@@ -83,6 +83,11 @@ def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):
     
     return FT_model
 
+# 日付情報を取得
+f = open('./saved_data/date_info.txt', 'rb')
+date_info = pickle.load(f)
+f.close()
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -121,7 +126,7 @@ def tweet():
 
     else:
         user = api.get_user(user_name)  # 入力情報を基にユーザー名の取得
-        icon_url = user.profile_image_url_https  # ★ユーザーのプロフィール画像のURLを代入
+        icon_url = user.profile_image_url_https  # ユーザーのプロフィール画像のURLの取得
 
         return render_template("input_tweet.html", name=user.name, icon_url=icon_url)
 
@@ -139,7 +144,10 @@ def result():
     dim_z = 25
     timesteps = 115  # 今回のシステムでは、140にしておけばよかったと後悔
     cls_num = 5
-    w2v = np.load('./saved_data/w2v.npy')
+    # w2v = np.load('./saved_data/w2v.npy')
+    w2v = np.load('./saved_data/w2v_'+date_info+'.npy')
+
+
     input_dim_w2v = w2v.shape[0]
     dim_embedding = w2v.shape[1]
 
@@ -191,9 +199,11 @@ def result():
                     loss={ 'out':'categorical_crossentropy'}, 
                     metrics=['acc'])
 
-    LSTM_Classification.load_weights('./saved_model/LSTM_Classification_weight.h5')
+    # LSTM_Classification.load_weights('./saved_model/LSTM_Classification_weight.h5')
+    LSTM_Classification.load_weights('./saved_model/LSTM_Classification_weight_'+date_info+'.h5')
 
-    f = open('./saved_data/dictionary.txt', 'rb')
+    # f = open('./saved_data/dictionary.txt', 'rb')
+    f = open('./saved_data/dictionary_'+date_info+'.txt', 'rb')
     dictionary = pickle.load(f)
     f.close()
 
@@ -205,7 +215,8 @@ def result():
 
     test_sentence_feature = get_sentence_feature([tweet_w2v])
 
-    past_user_information = np.load('./saved_data/past_user_information.npy')
+    # past_user_information = np.load('./saved_data/past_user_information.npy')
+    past_user_information = np.load('./saved_data/past_user_information_'+date_info+'.npy')
 
     test_input = []
     test_input.append(follow)
@@ -228,7 +239,8 @@ def result():
 
     AE_inputs_shape = normalization_candidate_tweet.shape[1]
     AE_model = create_AE_model(hidden, AE_inputs_shape)
-    AE_model.load_weights('./saved_model/AutoEncoder_model.h5')
+    # AE_model.load_weights('./saved_model/AutoEncoder_model.h5')
+    AE_model.load_weights('./saved_model/AutoEncoder_model_'+date_info+'.h5')
     weight_AE1 = []
     weight_AE2 = []
     weight_AE3 = []
@@ -238,7 +250,8 @@ def result():
     weight_AE3.append(AE_model.layers[3].get_weights())
 
     FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], AE_inputs_shape)  
-    FT_model.load_weights('./saved_model/fine_tuning_model.h5')
+    # FT_model.load_weights('./saved_model/fine_tuning_model.h5')
+    FT_model.load_weights('./saved_model/fine_tuning_model_'+date_info+'.h5')
 
     good_test_output = FT_model.predict(normalization_candidate_tweet)
     heart = int(good_test_output[0][0])
