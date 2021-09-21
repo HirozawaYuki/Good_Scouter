@@ -1,13 +1,14 @@
 import tweepy
 import datetime
 import pandas as pd
+import pickle
 
 # キーワードの結果をcsvファイルに書き出すために情報をDataFrameに登録する関数　引数(現在のDataFrame, キーワード, 文章数, ジャンル(自身で決定))
 
 def register_sentences(df, search_keyword, sentence_count, genre):
 #   print(search_keyword)
   tweets = api.search(q=search_keyword, count=sentence_count, tweet_mode='extended')
-  tweet_data = []
+  
 
   date = datetime.datetime.now() + datetime.timedelta(hours=9)  # 現在時刻の取得
 
@@ -89,5 +90,14 @@ df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
 SEARCH_WORD = "自民党 exclude:replies -filter:links min_faves:5 exclude:replies until:2021-08-31_22:00:00_JST"
 df = register_sentences(df, SEARCH_WORD, 100, "政治")
 
-df.to_csv('./Dataset/test.csv', mode='w', encoding='utf_8_sig')
+date = datetime.datetime.now() + datetime.timedelta(hours=9)
+date_info = '{}{}'.format(str(date.month).zfill(2), str(date.day).zfill(2))
 
+# ---------------日時データの保存----------------
+f = open('./saved_data/date_info.txt', 'wb')
+pickle.dump(date_info, f)
+f.close()
+#-----------------------------------------------
+
+# df.to_csv('./Dataset/test.csv', mode='w', encoding='utf_8_sig')
+df.to_csv('./Dataset/test_'+date_info+'.csv', mode='w', encoding='utf_8_sig')  # 日にち毎に違うフォルダにデータを保存したい場合はこちらを利用

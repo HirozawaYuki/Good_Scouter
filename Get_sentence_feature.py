@@ -61,7 +61,13 @@ dim_z = 25  # LSTMの特徴ベクトル次元数
 
 tf.random.set_seed(0)
 
-tweet_information = pd.read_csv('./Dataset/test.csv', encoding='CP932')
+# 日付情報を取得
+f = open('./saved_data/date_info.txt', 'rb')
+date_info = pickle.load(f)
+f.close()
+
+# tweet_information = pd.read_csv('./Dataset/test.csv', encoding='CP932')
+tweet_information = pd.read_csv('./Dataset/test_'+date_info+'.csv', encoding='CP932')
 
 # print(tweet_information)
 
@@ -76,7 +82,8 @@ dictionary, vec_data, len_sentence = make_dictionary(tweet_text, dictionary)
 
 
 # ---------------辞書データの保存----------------
-f = open('./saved_data/dictionary.txt', 'wb')
+# f = open('./saved_data/dictionary.txt', 'wb')
+f = open('./saved_data/dictionary_'+date_info+'.txt', 'wb')
 list_row = dictionary
 pickle.dump(list_row, f)
 f.close()
@@ -145,7 +152,8 @@ history = model.fit(x_train, y_train, batch_size=128, epochs=epochs_w2v)
 
 w2v = model.get_weights()[0]
 
-np.save('./saved_data/w2v.npy', w2v)
+# np.save('./saved_data/w2v.npy', w2v)
+np.save('./saved_data/w2v_'+date_info+'.npy', w2v)
 
 data_cls = tweet_information['キーワード']
 
@@ -235,7 +243,8 @@ LSTM_Classification.summary()
 
 
 
-path_weight = './saved_model/LSTM_Classification_weight.h5'
+# path_weight = './saved_model/LSTM_Classification_weight.h5'
+path_weight = './saved_model/LSTM_Classification_weight_'+date_info+'.h5'
 
 best_saver = tf.keras.callbacks.ModelCheckpoint(filepath=path_weight, monitor='loss', verbose=1, save_best_only=True, mode='auto')
 
@@ -266,5 +275,6 @@ cls = model_trial.predict([input_w2v])
 # -------------------------------------------------------------------------------------
 
 
-pd.DataFrame(cls).to_csv('./Dataset/feature.csv')  # 取得した特徴量をcsvファイルに出力
+# pd.DataFrame(cls).to_csv('./Dataset/feature.csv')  # 取得した特徴量をcsvファイルに出力
+pd.DataFrame(cls).to_csv('./Dataset/feature_'+date_info+'.csv')  # 日付毎にデータを保持したい場合はこちらを実行
 
