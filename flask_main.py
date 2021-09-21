@@ -25,7 +25,7 @@ def tweet():
 
 @app.route("/result",methods=["post"])
 def result():
-    hour = request.form["time_hour"]
+    hour = request.form["tweet_text"]
     # tweetのいいね数を予測する処理
 
     heart = 10
