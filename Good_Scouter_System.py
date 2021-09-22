@@ -133,9 +133,9 @@ def tweet():
 
 @app.route("/result", methods=["post"])
 def result():
-    time = request.form["time_hour"]
+    time = request.form["hour"]
 
-    candidate_tweet = request.form["tweet"]  # ツイート情報を取得
+    candidate_tweet = request.form["tweet_text"]  # ツイート情報を取得
     follow = user.friends_count  # 該当ユーザのフォロー数を代入
     follower = user.followers_count  # 該当ユーザのフォロワー数を代入
     total_tw = user.statuses_count  # 該当ユーザの総ツイート数を表示
