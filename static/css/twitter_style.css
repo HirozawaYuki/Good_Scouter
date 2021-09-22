@@ -18,7 +18,7 @@ button {
   }
   .container {
     margin: 30px auto;
-    height: 380px;
+    height: 480px;
     width: 550px;
     padding: 10px;
     border: 1px solid #38444d;
@@ -29,6 +29,7 @@ button {
     font-size: 20px;
     padding: 10px;
     background-color: #ffffff;
+    height: 80%;
   }
   .text::placeholder {
     color: #000;
