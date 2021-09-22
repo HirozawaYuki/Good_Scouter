@@ -1,35 +1,32 @@
+
 from flask import Flask, render_template, Response, redirect, url_for, session, request
+
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    user_name = ""
-    hour = 0
+    user_name = ""  # ユーザー名の初期化
+    hour = 0  # 時間の初期化
+    
     return render_template('./index.html')
 
-
-@app.route("/input_tweet",methods=["post"])
+@app.route("/input_tweet", methods=["post"])
 def tweet():
     user_name = request.form["user_name"]
-    # ユーザー情報を取得する処理
+    global icon_url
+    icon_url = "/static/image/star.jpg"
 
-    
-    # エラー処理（ユーザー情報取得失敗）
-    
-    # if user_name=NONE:
+    return render_template("input_tweet.html", name=user_name, icon_url=icon_url)
 
-    #     return render_template("input.html", name=user_name)
 
-    return render_template("input_tweet.html", name=user_name)
-
-@app.route("/result",methods=["post"])
+@app.route("/result", methods=["post"])
 def result():
-    hour = request.form["tweet_text"]
-    # tweetのいいね数を予測する処理
+    tweet_text = request.form["tweet_text"]
 
     heart = 10
-    return render_template("result.html", heart=heart)
+
+    return render_template("result.html", heart=heart, tweet_text=tweet_text, icon_url=icon_url)
 
 if __name__ == '__main__':
     app.run(host='localhost', debug=True, port=8080)
