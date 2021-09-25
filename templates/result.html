@@ -6,6 +6,7 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="static/css/bootstrap_4.5.0.min.css" />
     <link rel="stylesheet" href="static/css/styles.css" />
+    <link rel="stylesheet" href="static/css/twitter_style.css" />
   </head>
 
   <body>
@@ -37,16 +38,19 @@
             <img src="{{icon_url}}" />
           </figure>
           <div class="twitter__block-text">
-            <div class="name">{{name}}<span class="name_reply">@{{user_name}}</span></div>
-            <div class="date">{{time}}時間後</div>
-            <div class="text">
-              {{candidate_tweet}}
-            </div>
-            <div class="twitter__icon">
-              <span class="twitter-bubble"></span>
-              <span class="twitter-loop"></span>
-              <span class="twitter-heart">{{heart}}</span>
-            </div>
+            <form action="/input_tweet" method="POST">
+              <div class="name">{{name}}<span class="name_reply">@{{user_name}}</span></div>
+              <div class="date">{{time}}時間後</div>
+              <div class="text">
+                {{candidate_tweet}}
+              </div>
+              <div class="twitter__icon">
+                <span class="twitter-bubble"></span>
+                <span class="twitter-loop"></span>
+                <span class="twitter-heart">{{heart}}</span>
+                <button type="submit" name="user_name" class="submit_btn">ツイートする</button>
+              </div>
+            </form>
           </div>
         </div>
   

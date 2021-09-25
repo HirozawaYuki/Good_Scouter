@@ -102,7 +102,10 @@ def index():
 @app.route("/input_tweet", methods=["post"])
 def tweet():
     user_name = request.form["user_name"]
-    session['user_name'] = user_name
+    print(user_name)
+    if(user_name=='' and session.get('user_name')!=''):
+        user_name = session.get('user_name')
+    print(user_name)
 
     keys = pd.read_csv('./Twitter_API_Key_dummy.csv', encoding='CP932')
 
@@ -124,10 +127,10 @@ def tweet():
         user = api.get_user(user_name)
     # エラー処理
     except tweepy.error.TweepError:
-
         return render_template("index.html")
 
     else:
+        session['user_name'] = user_name
         user = api.get_user(user_name)  # 入力情報を基にユーザー名の取得
         icon_url = user.profile_image_url_https  # ユーザーのプロフィール画像のURLの取得
 
