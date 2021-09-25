@@ -34,20 +34,18 @@
         <!-- 記事エリア -->
         <div class="twitter__block">
           <figure>
-            <img src="static/image/icon.png" />
+            <img src="{{icon_url}}" />
           </figure>
           <div class="twitter__block-text">
-            <div class="name">sin<span class="name_reply">@usename</span></div>
-            <div class="date">1時間後</div>
+            <div class="name">{{name}}<span class="name_reply">@{{user_name}}</span></div>
+            <div class="date">{{time}}時間後</div>
             <div class="text">
-              aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaa<br>
-              aaaaaaaaaaaaaaaaaaa
-              今日も終電だよ～<br>v今日も終電だよ～<br>今日も終電だよ～<br>
+              {{candidate_tweet}}
             </div>
             <div class="twitter__icon">
-              <span class="twitter-bubble">1222</span>
-              <span class="twitter-loop">3</span>
-              <span class="twitter-heart">6</span>
+              <span class="twitter-bubble"></span>
+              <span class="twitter-loop"></span>
+              <span class="twitter-heart">{{heart}}</span>
             </div>
           </div>
         </div>
