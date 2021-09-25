@@ -252,7 +252,7 @@ ul {
   width: 20px;
   height: 20px;
   display: block;
-  background: url(static/svg/twitter-logo.svg) center no-repeat;
+  background: url(svg/twitter-logo.svg) center no-repeat;
 }
 
 .twitter__container .twitter__title span {
@@ -350,7 +350,7 @@ ul {
   height: 14px;
   display: block;
   padding-left: 20px;
-  background: url("static/svg/twitter-bubble.svg") left no-repeat;
+  background: url("svg/twitter-bubble.svg") left no-repeat;
   width: 20%;
   float: left;
   color: #8a9aa4;
@@ -361,7 +361,7 @@ ul {
   height: 14px;
   display: block;
   padding-left: 20px;
-  background: url("static/svg/twitter-heart.svg") left no-repeat;
+  background: url("svg/twitter-heart.svg") left no-repeat;
   width: 20%;
   float: left;
   color: #8a9aa4;
@@ -372,7 +372,7 @@ ul {
   height: 14px;
   display: block;
   padding-left: 20px;
-  background: url("static/svg/twitter-loop.svg") left no-repeat;
+  background: url("svg/twitter-loop.svg") left no-repeat;
   width: 20%;
   float: left;
   color: #8a9aa4;
@@ -409,7 +409,7 @@ ul {
   width: 20px;
   height: 20px;
   display: block;
-  background: url(static/svg/twitter-logo.svg) center no-repeat;
+  background: url(svg/twitter-logo.svg) center no-repeat;
 }
 
 .twitter__container .twitter__title span {
@@ -509,7 +509,7 @@ ul {
   height: 14px;
   display: block;
   padding-left: 20px;
-  background: url("static/svg/twitter-bubble.svg") left no-repeat;
+  background: url("svg/twitter-bubble.svg") left no-repeat;
   width: 20%;
   float: left;
   color: #8a9aa4;
@@ -520,7 +520,7 @@ ul {
   height: 14px;
   display: block;
   padding-left: 20px;
-  background: url("static/svg/twitter-heart.svg") left no-repeat;
+  background: url("svg/twitter-heart.svg") left no-repeat;
   width: 20%;
   float: left;
   color: #8a9aa4;
@@ -531,7 +531,7 @@ ul {
   height: 14px;
   display: block;
   padding-left: 20px;
-  background: url("static/svg/twitter-loop.svg") left no-repeat;
+  background: url("svg/twitter-loop.svg") left no-repeat;
   width: 20%;
   float: left;
   color: #8a9aa4;
