@@ -1,63 +1,65 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>予測されるいいね数</title>
+    <title>いいね☆スカウター</title>
+    <link rel="icon" type="image/png" sizes="180x180" href="static/image/icon.png" />
     <meta charset="UTF-8" />
-    <link
-    rel="stylesheet"
-    href="static/css/bootstrap_4.5.0.min.css"
-    />
+    <link rel="stylesheet" href="static/css/bootstrap_4.5.0.min.css" />
     <link rel="stylesheet" href="static/css/styles.css" />
   </head>
 
   <body>
-    <div class="container-fluid mx-0 px-0">
-      <img
-        class="d-block mb-5"
-        id="yubi"
-        width="100%"
-        src="static/image/Group2.png"
-        onclick="location.href='./'"
-        　
-      />
-    </div>
-    
-    <div class="container">
-      <div class="text-center mt-5 mb-5">
-        <h3>予測されるいいね数</h3>
+      <div class="container-fluid mx-0 px-0">
+          <img
+          class="d-block mb-5"
+          id="yubi"
+          width="100%"
+          src="static/image/Group2.png"
+          onclick="location.href='./'"
+          　
+        />
       </div>
-      <!-- <div id="main"></div> -->
-      <form action="/result" method="POST">
-        <div class="flex_container">
-            <div class="d-flex justify-content-center">
-              <div class="text">{{tweet_text}}</div>
-              
-              <img src="icon_url" class="img-fluid" alt="Responsive image">
-                {{heart}}
-                <!-- <input type="submit" value="Submit"> -->
-            </div>
-        </div>
-        <div class="d-flex justify-content-around">
-            <button type="submit" class="submit_btn">
-              初期画面へ
-            </button>
-            <button type="submit" class="submit_btn">
-              打ち直す
-            </button>
-        </div>
-      </form>
 
+      <!-- ▼twitter風ここから -->
+  <div class="twitter__container">
+      <!-- タイトル -->
+      <div class="twitter__title">
+        <span class="twitter-logo"></span>
+      </div>
+  
+      <!-- ▼タイムラインエリア scrollを外すと高さ固定解除 -->
+      <div class="twitter__contents">
+  
+        <!-- 記事エリア -->
+        <div class="twitter__block">
+          <figure>
+            <img src="static/image/Group2.png" />
+          </figure>
+          <div class="twitter__block-text">
+            <div class="name">sin<span class="name_reply">@usename</span></div>
+            <div class="date">1時間後</div>
+            <div class="text">
+              aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaa<br>
+              aaaaaaaaaaaaaaaaaaa
+              今日も終電だよ～<br>v今日も終電だよ～<br>今日も終電だよ～<br>
+            </div>
+            <div class="twitter__icon">
+              <span class="twitter-bubble">1222</span>
+              <span class="twitter-loop">3</span>
+              <span class="twitter-heart">6</span>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+      <!--　▲タイムラインエリア ここまで -->
+    </div>
+    <!--　▲twitter風ここまで -->
     </div>
 
     <!-- Bootstrap -->
-    <script
-      src="static/js/jquery-3.5.1.slim.min.js"
-    ></script>
-    <script
-      src="static/js/popper@1.16.0_popper.min.js"
-    ></script>
-    <script
-      src="static/js/4.5.0_bootstrap.min.js"
-    ></script>
+    <script src="static/js/jquery-3.5.1.slim.min.js"></script>
+    <script src="static/js/popper@1.16.0_popper.min.js"></script>
+    <script src="static/js/4.5.0_bootstrap.min.js"></script>
   </body>
 </html>

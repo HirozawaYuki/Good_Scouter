@@ -20,6 +20,13 @@ body {
   height: 95%;
 }
 
+#eco_bag_image {
+  /* margin-bottom: 5%; */
+  margin-left: 30%;
+  width: 40%;
+  height: 100%;
+}
+
 .image_div {
   width: 100%;
   height: 50%;
@@ -147,135 +154,6 @@ body {
   margin: 0px;
 }
 
-.icon_image_box {
-  width: 10%;
-  height: 10%;
-}
-
-#big_size {
-  width: 28%;
-  height: 45%;
-  font-size: 5em;
-  left: 4%;
-  /* bottom: 2%; */
-  /* background-color: #04012c; */
-  /* color: white; */
-  background-color: #61c359;
-  position: fixed;
-  font-weight: bold;
-  border-radius: 10%;
-  cursor: pointer;
-  background-image: url("./../image/eco_button.png");
-  background-repeat: no-repeat;
-  background-size: 70% auto;
-  background-position: center;
-}
-
-/* #mid_size {
-  width: 28%;
-  height: 25%;
-  font-size: 5em;
-  left: 36%;
-  background-color: #61c359;
-  position: fixed;
-  font-weight: bold;
-  border-radius: 10%;
-  cursor: pointer;
-  background-image: url("./../image/eco_button.png");
-  background-repeat: no-repeat;
-  background-size: 50% auto;
-  background-position: center;
-} */
-
-#small_size {
-  width: 28%;
-  height: 45%;
-  font-size: 5em;
-  left: 36%;
-  /* bottom: 2%; */
-  background-color: #61c359;
-  /* color: white; */
-  position: fixed;
-  font-weight: bold;
-  border-radius: 10%;
-  cursor: pointer;
-  background-image: url("./../image/eco_button.png");
-  background-repeat: no-repeat;
-  background-size: 30% auto;
-  background-position: center;
-}
-
-#none_bag {
-  width: 28%;
-  height: 45%;
-  font-size: 3em;
-  /* right: 2%; */
-  left: 68%;
-  /* top: 65%; */
-  /* bottom: 2%; */
-  background-color: #fcaa00;
-  /* color: white; */
-  position: fixed;
-  font-weight: bold;
-  border-radius: 10%;
-  cursor: pointer;
-  background-image: url("./../image/poli2.png");
-  background-repeat: no-repeat;
-  background-size: 50% auto;
-  background-position: center;
-}
-
-#custom {
-  width: 92%;
-  height: 15%;
-  font-size: 2em;
-  left: 4%;
-  top: 80%;
-  text-align: center;
-  /* bottom: 2%; */
-  /* background-color: #fcaa00; */
-  /* color: white; */
-  position: fixed;
-  font-weight: bold;
-  border-radius: 10%;
-  cursor: pointer;
-  background-image: url("./../image/setting.png");
-  background-repeat: no-repeat;
-  background-size: 10% auto;
-  background-position: left;
-}
-
-#ok {
-  width: 45%;
-  height: 15%;
-  font-size: 3em;
-  right: 2%;
-  /* top: 65%; */
-  bottom: 2%;
-  background-color: #fcaa00;
-  /* color: white; */
-  position: fixed;
-  font-weight: bold;
-  border-radius: 10%;
-  cursor: pointer;
-}
-
-#custom_ok {
-  width: 40%;
-  height: 15%;
-  font-size: 3em;
-  right: 30%;
-  left: 30%;
-  /* top: 65%; */
-  bottom: 2%;
-  background-color: #fcaa00;
-  /* color: white; */
-  position: fixed;
-  font-weight: bold;
-  border-radius: 10%;
-  cursor: pointer;
-}
-
 #font-custom {
   text-align: center;
 }
@@ -283,22 +161,6 @@ body {
 .unit {
   margin-left: 90%;
   font-size: 1.5em;
-}
-
-#back_size_display {
-  width: 15%;
-  height: 10%;
-  font-size: 1.5em;
-  left: 0%;
-  top: 0%;
-  position: fixed;
-  font-weight: bold;
-  border-radius: 10%;
-  cursor: pointer;
-  background-image: url("./../image/back.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center;
 }
 
 #retake {
@@ -358,4 +220,319 @@ ul {
   background-repeat: no-repeat;
   background-size: 20% auto;
   background-position: center;
+}
+/*/////////////////////////////////////////////////
+//twitter風チャット画面(会話方式)を記事に表示する方法
+/////////////////////////////////////////////////*/
+.twitter__container {
+  padding: 0;
+  background: #ffffff;
+  overflow: hidden;
+  max-width: 400px;
+  margin: 20px auto;
+  font-size: 80%;
+  border: solid 1px #eeeeee;
+}
+
+.twitter__container a {
+  color: #58aeed;
+}
+
+/* タイトル部分 */
+.twitter__container .twitter__title {
+  background: #58aeed;
+  padding: 10px;
+  text-align: center;
+  font-size: 150%;
+  color: #ffffff;
+}
+
+.twitter__container .twitter__title .twitter-logo {
+  margin: 0 auto;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background: url(static/svg/twitter-logo.svg) center no-repeat;
+}
+
+.twitter__container .twitter__title span {
+  font-size: 20px;
+}
+
+/* タイムライン部分 */
+.twitter__container .twitter__contents {
+  overflow: hidden;
+  position: relative;
+  line-height: 135%;
+}
+
+.twitter__container .twitter__contents.scroll {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.twitter__container .twitter__block {
+  width: 100%;
+  display: block;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-bottom: solid 1px #eeeeee;
+  overflow: hidden;
+}
+
+.twitter__container .twitter__block:last-child {
+  border-bottom: solid 0px;
+}
+/* アイコン画像 */
+.twitter__container .twitter__block figure {
+  width: 50px;
+  padding: 0;
+  margin: 0;
+  float: left;
+  width: 50px;
+}
+/* 正方形を用意 */
+.twitter__container .twitter__block figure img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+/* コメントエリア */
+.twitter__container .twitter__block-text {
+  margin: 0;
+  position: relative;
+  margin-left: 60px;
+  padding-right: 10px;
+}
+
+.twitter__container .twitter__block-text .name {
+  font-weight: bold;
+}
+
+.twitter__container .twitter__block-text .name .name_reply {
+  color: #8a9aa4;
+  margin-left: 10px;
+}
+
+.twitter__container .twitter__block-text .date {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  text-align: right;
+  color: #8a9aa4;
+}
+/* 本文 */
+.twitter__container .twitter__block-text .text {
+  margin: 5px 0;
+}
+/* 画像を貼る場合 */
+.twitter__container .twitter__block-text .text .in-pict img {
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  margin: 5px 0;
+  width: 95%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/*///////////////////////////////////////////
+//埋め込みアイコン
+////////////////////////////////////////////*/
+
+.twitter__container .twitter__icon br {
+  margin-top: 5px;
+  display: none;
+}
+
+.twitter__container .twitter__icon .twitter-bubble {
+  width: 14px;
+  height: 14px;
+  display: block;
+  padding-left: 20px;
+  background: url("static/svg/twitter-bubble.svg") left no-repeat;
+  width: 20%;
+  float: left;
+  color: #8a9aa4;
+}
+
+.twitter__container .twitter__icon .twitter-heart {
+  width: 14px;
+  height: 14px;
+  display: block;
+  padding-left: 20px;
+  background: url("static/svg/twitter-heart.svg") left no-repeat;
+  width: 20%;
+  float: left;
+  color: #8a9aa4;
+}
+
+.twitter__container .twitter__icon .twitter-loop {
+  width: 14px;
+  height: 14px;
+  display: block;
+  padding-left: 20px;
+  background: url("static/svg/twitter-loop.svg") left no-repeat;
+  width: 20%;
+  float: left;
+  color: #8a9aa4;
+}
+/*/////////////////////////////////////////////////
+//twitter風チャット画面(会話方式)を記事に表示する方法
+/////////////////////////////////////////////////*/
+.twitter__container {
+  padding: 0;
+  background: #ffffff;
+  overflow: hidden;
+  max-width: 600px;
+  margin: 20px auto;
+  font-size: 80%;
+  border: solid 1px #eeeeee;
+}
+
+.twitter__container a {
+  color: #58aeed;
+}
+
+/* タイトル部分 */
+.twitter__container .twitter__title {
+  background: #58aeed;
+  margin-bottom: 10px;
+  padding: 10px;
+  text-align: center;
+  font-size: 150%;
+  color: #ffffff;
+}
+
+.twitter__container .twitter__title .twitter-logo {
+  margin: 0 auto;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background: url(static/svg/twitter-logo.svg) center no-repeat;
+}
+
+.twitter__container .twitter__title span {
+  font-size: 20px;
+}
+
+/* タイムライン部分 */
+.twitter__container .twitter__contents {
+  overflow: hidden;
+  margin-bottom: 0px;
+  position: relative;
+  line-height: 135%;
+}
+
+.twitter__container .twitter__contents.scroll {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.twitter__container .twitter__block {
+  width: 100%;
+  display: block;
+  padding: 10px;
+  /* margin-bottom: 5px; */
+  border-bottom: solid 1px #eeeeee;
+  overflow: hidden;
+}
+
+.twitter__container .twitter__block:last-child {
+  border-bottom: solid 0px;
+}
+/* アイコン画像 */
+.twitter__container .twitter__block figure {
+  width: 50px;
+  padding: 0;
+  margin: 0;
+  float: left;
+  width: 50px;
+}
+/* 正方形を用意 */
+.twitter__container .twitter__block figure img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+/* コメントエリア */
+.twitter__container .twitter__block-text {
+  margin: 0;
+  position: relative;
+  margin-left: 60px;
+  padding-right: 10px;
+}
+
+.twitter__container .twitter__block-text .name {
+  height: 0px;
+  font-weight: bold;
+}
+
+.twitter__container .twitter__block-text .name .name_reply {
+  color: #8a9aa4;
+  margin-left: 10px;
+}
+
+.twitter__container .twitter__block-text .date {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  text-align: right;
+  color: #8a9aa4;
+}
+/* 本文 */
+.twitter__container .twitter__block-text .text {
+  margin: 5px 0;
+  margin-bottom: 10px;
+}
+/* 画像を貼る場合 */
+.twitter__container .twitter__block-text .text .in-pict img {
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  margin: 5px 0;
+  width: 95%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/*///////////////////////////////////////////
+//埋め込みアイコン
+////////////////////////////////////////////*/
+
+.twitter__container .twitter__icon br {
+  display: none;
+}
+
+.twitter__container .twitter__icon .twitter-bubble {
+  width: 14px;
+  height: 14px;
+  display: block;
+  padding-left: 20px;
+  background: url("static/svg/twitter-bubble.svg") left no-repeat;
+  width: 20%;
+  float: left;
+  color: #8a9aa4;
+}
+
+.twitter__container .twitter__icon .twitter-heart {
+  width: 14px;
+  height: 14px;
+  display: block;
+  padding-left: 20px;
+  background: url("static/svg/twitter-heart.svg") left no-repeat;
+  width: 20%;
+  float: left;
+  color: #8a9aa4;
+}
+
+.twitter__container .twitter__icon .twitter-loop {
+  width: 14px;
+  height: 14px;
+  display: block;
+  padding-left: 20px;
+  background: url("static/svg/twitter-loop.svg") left no-repeat;
+  width: 20%;
+  float: left;
+  color: #8a9aa4;
 }
