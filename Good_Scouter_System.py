@@ -15,7 +15,7 @@ from tensorflow.keras.layers import (Embedding, Dense,
                                      Lambda, Input, LSTM, Bidirectional, Dropout, Reshape)
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
-from flask import Flask, render_template, Response, redirect, url_for, session, request
+from flask import Flask, render_template, Response, redirect, url_for, session, request, Markup
 
 
 def make_tweet_w2v(input_sentence, timesteps, dictionary):
@@ -262,6 +262,7 @@ def result():
     good_test_output = FT_model.predict(normalization_candidate_tweet)
     heart = int(good_test_output[0][0])
 
+    candidate_tweet = Markup(candidate_tweet.replace('\n', '<br>'))
     return render_template("result.html", heart=heart, candidate_tweet=candidate_tweet, name=user.name, user_name=user_name, icon_url=icon_url, time=time)
 
 if __name__ == '__main__':
