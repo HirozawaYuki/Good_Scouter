@@ -104,7 +104,7 @@ def index():
 def tweet():
     user_name = request.form["user_name"]
     print(user_name)
-    if (user_name == '' and session.get('user_name') != ''):
+    if(user_name=='' and session.get('user_name')!=''):
         user_name = session.get('user_name')
     print(user_name)
 
@@ -128,7 +128,6 @@ def tweet():
         user = api.get_user(user_name)
     # エラー処理
     except tweepy.error.TweepError:
-
         return render_template("index.html")
 
     else:
