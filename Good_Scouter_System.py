@@ -90,6 +90,8 @@ f.close()
 
 app = Flask(__name__)
 
+app.secret_key = 'secret'
+
 @app.route('/')
 def index():
     user_name = ""  # ユーザー名の初期化
@@ -100,6 +102,7 @@ def index():
 @app.route("/input_tweet", methods=["post"])
 def tweet():
     user_name = request.form["user_name"]
+    session['user_name'] = user_name
 
     keys = pd.read_csv('./Twitter_API_Key_dummy.csv', encoding='CP932')
 
@@ -134,6 +137,9 @@ def tweet():
 @app.route("/result", methods=["post"])
 def result():
     time = request.form["hour"]
+    icon_url = user.profile_image_url_https  # ユーザーのプロフィール画像のURLの取得
+
+    user_name = session.get('user_name', None)  # sessionを使ってユーザーidを取得
 
     candidate_tweet = request.form["tweet_text"]  # ツイート情報を取得
     follow = user.friends_count  # 該当ユーザのフォロー数を代入
@@ -256,7 +262,7 @@ def result():
     good_test_output = FT_model.predict(normalization_candidate_tweet)
     heart = int(good_test_output[0][0])
 
-    return render_template("result.html", heart=heart)
+    return render_template("result.html", heart=heart, candidate_tweet=candidate_tweet, name=user.name, user_name=user_name, icon_url=icon_url, time=time)
 
 if __name__ == '__main__':
     app.run(host='localhost', debug=True, port=8080)
