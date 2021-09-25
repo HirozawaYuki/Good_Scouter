@@ -11,7 +11,7 @@ def create_AE_model(hidden, inputs):  # オートエンコーダを構築する�
     inputL = Input(shape=(inputs))
     
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
-    x1 = Dense(32, activation="relu", name="dense2")(x)
+    x1 = Dense(hidden//2, activation="relu", name="dense2")(x)
     x2 = Dense(hidden, activation="relu", name="dense3")(x1)
     outputL = Dense(inputs, name="dense4")(x2)
     COPD_DAE = Model(inputs = inputL, outputs = outputL)
@@ -23,20 +23,21 @@ def create_AE_model(hidden, inputs):  # オートエンコーダを構築する�
     return COPD_DAE
 
 
-def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):  # ファインチューニングモデルを構築する関数
+def create_FT_model(hidden, w_AE1, w_AE2, inputs):  # ファインチューニングモデルを構築する関数
   
     inputL = Input(shape=(inputs))
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
-    x1 = Dense(32, activation="relu", name="dense2")(x)
-    x2 = Dense(hidden, activation="relu", name="dense3")(x1)
-    outputL = Dense(1, activation="relu", name="dense4")(x2)
+    x1 = Dense(hidden//2, activation="relu", name="dense2")(x)
+    # x2 = Dense(hidden//4, activation="relu", name="dense3")(x1)
+    # outputL = Dense(1, activation="relu", name="dense4")(x2)
+    outputL = Dense(1, activation="relu", name="dense4")(x1)
     FT_model = Model(inputs = inputL, outputs = outputL)
     
     FT_model.summary()
 
     FT_model.layers[1].set_weights(w_AE1)
     FT_model.layers[2].set_weights(w_AE2)
-    FT_model.layers[3].set_weights(w_AE3)
+    #FT_model.layers[3].set_weights(w_AE3)
 
     FT_model.compile(optimizer=Adam(lr=0.001), loss='mae')
     
@@ -83,7 +84,7 @@ hidden = 64
 AE_model = create_AE_model(hidden, AE_inputs_columns)
 
 history = AE_model.fit(norm_x_train, norm_x_train,
-                       epochs=100,
+                       epochs=200,
                        batch_size=32,
                        shuffle=True)
 
@@ -99,7 +100,8 @@ weight_AE2.append(AE_model.layers[2].get_weights())
 weight_AE3.append(AE_model.layers[3].get_weights())
 weight_AE2[0]
 
-FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], AE_inputs_columns)  
+# FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], AE_inputs_columns)
+FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], AE_inputs_columns)
 
 history2 = FT_model.fit(norm_x_train, t_train, 
                      batch_size=29, 

@@ -52,7 +52,7 @@ def create_AE_model(hidden, inputs):
     inputL = Input(shape=(inputs))
     
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
-    x1 = Dense(32, activation="relu", name="dense2")(x)
+    x1 = Dense(hidden//2, activation="relu", name="dense2")(x)
     x2 = Dense(hidden, activation="relu", name="dense3")(x1)
     outputL = Dense(inputs, name="dense4")(x2)
     COPD_DAE = Model(inputs = inputL, outputs = outputL)
@@ -64,18 +64,19 @@ def create_AE_model(hidden, inputs):
     return COPD_DAE
 
 
-def create_FT_model(hidden, w_AE1, w_AE2, w_AE3, inputs):
+def create_FT_model(hidden, w_AE1, w_AE2, inputs):
   
     inputL = Input(shape=(inputs))
     x = Dense(hidden, activation="relu", name="dense1")(inputL)
-    x1 = Dense(32, activation="relu", name="dense2")(x)
-    x2 = Dense(hidden, activation="relu", name="dense3")(x1)
-    outputL = Dense(1, activation="relu", name="dense4")(x2)
+    x1 = Dense(hidden//2, activation="relu", name="dense2")(x)
+    # x2 = Dense(hidden//4, activation="relu", name="dense3")(x1)
+    # outputL = Dense(1, activation="relu", name="dense4")(x2)
+    outputL = Dense(1, activation="relu", name="dense4")(x1)
     FT_model = Model(inputs = inputL, outputs = outputL)
 
     FT_model.layers[1].set_weights(w_AE1)
     FT_model.layers[2].set_weights(w_AE2)
-    FT_model.layers[3].set_weights(w_AE3)
+    #FT_model.layers[3].set_weights(w_AE3)
 
     FT_model.compile(optimizer=Adam(lr=0.001), loss='mae')
     
@@ -258,7 +259,8 @@ def result():
     weight_AE2.append(AE_model.layers[2].get_weights())
     weight_AE3.append(AE_model.layers[3].get_weights())
 
-    FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], AE_inputs_shape)  
+    #FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], weight_AE3[0], AE_inputs_shape)
+    FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], AE_inputs_shape)
     # FT_model.load_weights('./saved_model/fine_tuning_model.h5')
     FT_model.load_weights('./saved_model/fine_tuning_model_'+date_info+'.h5')
 
