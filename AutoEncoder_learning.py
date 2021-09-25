@@ -70,7 +70,7 @@ x_test_tweet = x_test['ツイートText']
 x_train = x_train.drop(['Unnamed: 0', 'ツイートID', 'ツイートText', 'ツイートURL', 'キーワード', 'ツイート時刻', '鍵垢flag', 'ユーザID', 'いいね数'], axis=1)
 x_test = x_test.drop(['Unnamed: 0', 'ツイートID', 'ツイートText', 'ツイートURL', 'キーワード', 'ツイート時刻', '鍵垢flag', 'ユーザID', 'いいね数'], axis=1)
 
-mm = preprocessing.MinMaxScaler()
+mm = preprocessing.StandardScaler()
 norm_x_train = mm.fit_transform(x_train)
 norm_x_test = mm.fit_transform(x_test)
 
@@ -105,7 +105,7 @@ FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], AE_inputs_colum
 
 history2 = FT_model.fit(norm_x_train, t_train, 
                      batch_size=29, 
-                     epochs=100)
+                     epochs=300)
 
 # FT_model.save('./saved_model/fine_tuning_model.h5')
 FT_model.save('./saved_model/fine_tuning_model_'+date_info+'.h5')
