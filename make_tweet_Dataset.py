@@ -10,7 +10,7 @@ def register_sentences(df, search_keyword, sentence_count, genre):
   tweets = api.search(q=search_keyword, count=sentence_count, tweet_mode='extended')
   
 
-  date = datetime.datetime.now() + datetime.timedelta(hours=9)  # 現在時刻の取得
+  date = datetime.datetime.now() # 現在時刻の取得
 
   for t in tweets:
     # ツイート時刻を取得して、日本時間に変換（UTC→JST）
@@ -65,38 +65,40 @@ df = pd.DataFrame(columns=['ツイートID', 'ツイートText', 'いいね数',
 # キーワード検索で探索(条件：リプライやURL,画像, 動画付きツイートを除外、いいね数が5以上で2021年8月31日22時までにツイートされたもの) 8月31日23時40分現在
 
 # df = register_sentences(df, search_keyword, sentence_count, genre)
-SEARCH_WORD = "人工知能 -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"  # 「人工知能」とキーワード検索
+SEARCH_WORD = "人工知能 min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"  # 「人工知能」とキーワード検索
 df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
-SEARCH_WORD = "野球 -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "野球 min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
-SEARCH_WORD = "5G -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "5G min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
-SEARCH_WORD = "サッカー -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "サッカー min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
-SEARCH_WORD = "バドミントン -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "バドミントン min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
-SEARCH_WORD = "フジロック -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "フジロック min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "音楽")
-SEARCH_WORD = "紅白歌合戦 -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "紅白歌合戦 min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "音楽")
-SEARCH_WORD = "為替 -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "為替 min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "金融")
-SEARCH_WORD = "日銀 -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "日銀 min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "金融")
-SEARCH_WORD = "衆院選 -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "衆院選 min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "政治")
-SEARCH_WORD = "IoT -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "IoT min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
-SEARCH_WORD = "自民党 -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "自民党 min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "政治")
-SEARCH_WORD = "NBA -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "NBA min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
-SEARCH_WORD = "DX -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "DX min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
-SEARCH_WORD = "ピアノ -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "ピアノ min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "音楽")
-SEARCH_WORD = "アニソン -filter:links min_faves:3 exclude:replies since:2021-09-22_7:00:00_JST until:2021-09-22_13:00:00_JST"
+SEARCH_WORD = "アニソン min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 df = register_sentences(df, SEARCH_WORD, 100, "音楽")
+#SEARCH_WORD = "大谷翔平 min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
+#df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
 
 
 date = datetime.datetime.now()

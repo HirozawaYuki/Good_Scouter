@@ -54,7 +54,7 @@ def make_dictionary(data, dictionary):
 
 dim_embedding = 16
 epochs_w2v = 10
-epochs_lstm = 10
+epochs_lstm = 100
 batchsize_w2v = 128
 batchsize_lstm = 128
 dim_z = 25  # LSTMの特徴ベクトル次元数
