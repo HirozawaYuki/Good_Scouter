@@ -150,7 +150,7 @@ def result():
     follower = user.followers_count  # 該当ユーザのフォロワー数を代入
     total_tw = user.statuses_count  # 該当ユーザの総ツイート数を表示
 
-    hidden = 64
+    hidden = 32
     dim_z = 25
     timesteps = 115  # 今回のシステムでは、140にしておけばよかったと後悔
     cls_num = 5
@@ -237,7 +237,7 @@ def result():
     test_input = np.array(test_input)
     test_input = test_input.reshape(-1, past_user_information.shape[1])
 
-    mm = preprocessing.MinMaxScaler()
+    mm = preprocessing.StandardScaler()
 
     tweet_data_include_candidate_tweet = np.insert(past_user_information, past_user_information.shape[0], test_input, axis=0)
 
