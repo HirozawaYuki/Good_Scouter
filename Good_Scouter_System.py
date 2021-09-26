@@ -150,7 +150,7 @@ def result():
     follower = user.followers_count  # 該当ユーザのフォロワー数を代入
     total_tw = user.statuses_count  # 該当ユーザの総ツイート数を表示
 
-    hidden = 64
+    hidden = 32
     dim_z = 25
     timesteps = 115  # 今回のシステムでは、140にしておけばよかったと後悔
     cls_num = 5

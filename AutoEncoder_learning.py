@@ -78,13 +78,13 @@ norm_x_test = mm.fit_transform(x_test)
 np.save('./saved_data/normalization_user_information_'+date_info+'.npy', norm_x_test)
 
 AE_inputs_columns = len(x_train.columns)
-hidden = 64
+hidden = 32
 
 
 AE_model = create_AE_model(hidden, AE_inputs_columns)
 
 history = AE_model.fit(norm_x_train, norm_x_train,
-                       epochs=200,
+                       epochs=300,
                        batch_size=32,
                        shuffle=True)
 
@@ -105,7 +105,7 @@ FT_model = create_FT_model(hidden, weight_AE1[0], weight_AE2[0], AE_inputs_colum
 
 history2 = FT_model.fit(norm_x_train, t_train, 
                      batch_size=29, 
-                     epochs=300)
+                     epochs=400)
 
 # FT_model.save('./saved_model/fine_tuning_model.h5')
 FT_model.save('./saved_model/fine_tuning_model_'+date_info+'.h5')
