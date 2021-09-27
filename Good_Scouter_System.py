@@ -3,6 +3,9 @@ import datetime
 import pandas as pd
 import MeCab
 import pickle
+import msoffcrypto
+import getpass
+import io
 import numpy as np
 from sklearn import preprocessing
 import tensorflow as tf
@@ -89,6 +92,30 @@ f = open('./saved_data/date_info.txt', 'rb')
 date_info = pickle.load(f)
 f.close()
 
+#---------------APIキーの読み込み----------------
+print('APIキーを読み込みます\nTwitter_API_Key_pass.xlsxのパスワードを入力して下さい')
+excelpass = getpass.getpass('パスワード：')
+
+decrypted = io.BytesIO()
+
+with open("Twitter_API_Key_pass.xlsx", "rb") as f:
+    file = msoffcrypto.OfficeFile(f)
+    file.load_key(password=excelpass)
+    file.decrypt(decrypted)
+
+keys = pd.read_excel(decrypted, engine="openpyxl")
+key_data = keys['key']
+
+API_KEY = key_data[0]
+API_SECRET = key_data[1]
+ACCESS_TOKEN = key_data[2]
+ACCESS_TOKEN_SECRET = key_data[3]
+
+auth = tweepy.OAuthHandler(API_KEY, API_SECRET)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+api = tweepy.API(auth)
+#-----------------------------------------------
+
 app = Flask(__name__)
 
 app.secret_key = 'secret'
@@ -108,20 +135,7 @@ def tweet():
         user_name = session.get('user_name')
     print(user_name)
 
-    keys = pd.read_csv('./Twitter_API_Key_dummy.csv', encoding='CP932')
-
-
-    key_data = keys['key']
-
-    API_KEY = key_data[0]
-    API_SECRET = key_data[1]
-    ACCESS_TOKEN = key_data[2]
-    ACCESS_TOKEN_SECRET = key_data[3]
-
-    auth = tweepy.OAuthHandler(API_KEY, API_SECRET)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    global api, user
-    api = tweepy.API(auth)
+    global user
 
     # ユーザー情報を取得する処理
     try:
