@@ -46,7 +46,7 @@ def register_sentences(df, search_keyword, sentence_count, genre):
   return df
 
 
-#
+#---------------APIキーの読み込み----------------
 print('APIキーを読み込みます\nTwitter_API_Key_pass.xlsxのパスワードを入力して下さい')
 excelpass = getpass.getpass('パスワード：')
 
@@ -64,11 +64,11 @@ API_KEY = key_data[0]
 API_SECRET = key_data[1]
 ACCESS_TOKEN = key_data[2]
 ACCESS_TOKEN_SECRET = key_data[3]
-#
 
 auth = tweepy.OAuthHandler(API_KEY, API_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
+#-----------------------------------------------
 
 
 df = pd.DataFrame(columns=['ツイートID', 'ツイートText', 'いいね数', 'フォロー数', 'ユーザフォロワー数', 'ツイート時刻', 'ツイート後経過時間(h)', 'ユーザID', 'ユーザ総ツイート数', '鍵垢flag', 'ツイートURL', 'キーワード'])
