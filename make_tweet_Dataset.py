@@ -104,8 +104,8 @@ df = pd.DataFrame(columns=['ツイートID', 'ツイートText', 'いいね数',
 # df = register_sentences(df, SEARCH_WORD, 100, "スポーツ")
 # SEARCH_WORD = "DX min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 # df = register_sentences(df, SEARCH_WORD, 100, "テクノロジー")
-SEARCH_WORD = "ピアノ min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
-df = register_sentences(df, SEARCH_WORD, 3, "音楽")
+# SEARCH_WORD = "ピアノ min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
+# df = register_sentences(df, SEARCH_WORD, 100, "音楽")
 # SEARCH_WORD = "アニソン min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
 # df = register_sentences(df, SEARCH_WORD, 100, "音楽")
 #SEARCH_WORD = "大谷翔平 min_faves:3 exclude:replies since:2021-09-25_11:00:00_JST until:2021-09-25_16:00:00_JST -filter:links"
